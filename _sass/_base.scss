@@ -220,3 +220,8 @@ pre {
 blockquote {
     font-style: normal;
 }
+
+p > .post-excerpt {
+    size: 8px;
+    color: gray;
+}

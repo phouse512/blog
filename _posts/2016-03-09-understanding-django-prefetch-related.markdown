@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Understanding Django's prefetch_related"
+title:  "Understanding Django's prefetch_related helper"
 date:   2016-03-08 18:50:35 -0600
 categories: django orm
 comments: true
