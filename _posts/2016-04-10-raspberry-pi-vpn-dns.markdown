@@ -47,7 +47,13 @@ hosting service that gave me a free domain-name who's DNS server points to my
 current ip. You can then run [DDclient][dd-client], a perl client that
 auto-updates your dynamic DNS service provider's dns entry. Your
 `ddclient.conf` can be pretty robust to handle almost any dynamic dns service
-you choose.  
+you choose. I also enabled logging and had it forward to `/var/log/openvpn.log`
+for simpler debugging when I first was setting up. I can imagine somehow it
+might be cool to add some monitoring around vpn stats in the future!
+
+
+
+
 
 
 [yak-shaver]: http://urlgoeshere
