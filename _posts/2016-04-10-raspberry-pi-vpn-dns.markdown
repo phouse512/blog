@@ -8,7 +8,7 @@ comments: true
 
 With most of my programming projects, you could consider me a textbook
 [yak-shaver][yak-shaver]. I usually find myself going down the rabbit hole so
-much so that I end up wasting unnecessary time, but fortunately in this case
+much so that I end up wasting unnecessary time and energy, but fortunately in this case
 I ended up learning a lot of useful skills and knowledge. My original intention
 was to start hosting my own graphite/carbon server so that I could set up
 detailed metrics reporting for some of my applications. Up until now, I had
@@ -60,9 +60,11 @@ The netgear router in my apartment allows for you to specify custom DNS servers,
 
 2 days into my home installation, my internet stopped working, and I was no longer able to connect on the VPN to my home network. When I physically able to see that the raspberry pi's were on, but something was keeping them from operating normally. After a little more digging, I realized I had forgotten that I had set the raspberry pi's static ip addresses through the router, but the router's dhcp server was no longer running and saving those ip's.
 
-From what I can tell: 1) someone accidentally unplugged the raspberry pi's but realized and plugged them back in. 2) because the pi's didn't have static ip addresses, when they connected (via Ethernet) they grabbed whatever ips they could. 3) The router had my DNS server's ip hard coded, so when the pi's changed, a device could no longer resolve hostnames. 4) the port forwarded for the vpn also pointed at a static address so outside connections couldn't resolve either.
+From what I can tell: 1) someone accidentally unplugged the raspberry pi's but realized and plugged them back in. 2) because the pi's didn't have static ip addresses, when they connected (via Ethernet) they grabbed whatever ips they could. 3) The router had my DNS server's ip hard coded, so when the pi's changed, a device could no longer resolve hostnames. 4) the port forwarded for the vpn also pointed at a static address so outside connections couldn't resolve either. 5) Not only were existing devices not able to connect to the Internet, new devices could also not connect without manually specifying an ip and trying (most devices use DHCP by default).
 
-All-in-all, it was a pretty big mess, and there are still a few unanswered questions about why things turned
+All-in-all, it was a pretty big mess, and there are still a few unanswered questions about why things turned out the way they did. I'm still not sure how a local network resolves the location of the DHCP server if the router dhcp is turned off, and subnets are still a black-hole to me but I learned from my mistakes and know a little more about running your own little sliver of the Internet.
+
+Now..time to work on that Graphite server!
 
 
 [yak-shaver]: http://urlgoeshere
