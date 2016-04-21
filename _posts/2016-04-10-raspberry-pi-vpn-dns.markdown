@@ -56,6 +56,13 @@ pi in my own apartment.
 
 The netgear router in my apartment allows for you to specify custom DNS servers, so I could easily test out my server. After some searching and reading, using dnsmasq seemed like the best fit for my relatively lightweight needs. The documentation and man page around it is very helpful, so I won't explain too much here. Some configuration things to note: 1) set up specific logging for this service in its own directory - seeing your DNS server actually cache/process hostname resolution is useful in the beginning, but they are also incredibly chatty. Putting it in its own file will make it easier to set up log rotation, and can give you the opportunity to see how effective your DNS server is, similarly to how [pi-hole][pi-hole] does it. 2) set your fallback DNS servers to something reliable and fast- if you're in the continental U.S. I would recommend using Google's at 8.8.8.8 or 8.8.4.4.
 
+#### Outage #1
+
+2 days into my home installation, my internet stopped working, and I was no longer able to connect on the VPN to my home network. When I physically able to see that the raspberry pi's were on, but something was keeping them from operating normally. After a little more digging, I realized I had forgotten that I had set the raspberry pi's static ip addresses through the router, but the router's dhcp server was no longer running and saving those ip's.
+
+From what I can tell: 1) someone accidentally unplugged the raspberry pi's but realized and plugged them back in. 2) because the pi's didn't have static ip addresses, when they connected (via Ethernet) they grabbed whatever ips they could. 3) The router had my DNS server's ip hard coded, so when the pi's changed, a device could no longer resolve hostnames. 4) the port forwarded for the vpn also pointed at a static address
+
+
 [yak-shaver]: http://urlgoeshere
 [dd-client]: https://sourceforge.net/p/ddclient/wiki/Home/
 [pi-hole]: http://linkyk
