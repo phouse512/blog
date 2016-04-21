@@ -47,7 +47,11 @@ hosting service that gave me a free domain-name who's DNS server points to my
 current ip. You can then run [DDclient][dd-client], a perl client that
 auto-updates your dynamic DNS service provider's dns entry. Your
 `ddclient.conf` can be pretty robust to handle almost any dynamic dns service
-you choose.  
+you choose. OpenVPN also has some useful logging you can use to debug your VPN when setting up - in the future if (when..?) I build a log aggregation service using syslog. It might also come in handy for adding some metrics monitoring about usage and data passed through.
+
+#### DNS and DHCP Server
+
+Next, I realized I wasn't able to connect to devices via hostname, only with IPs. Handling hostname resolution in local `/etc/hosts` wasn't a path I wanted to go down, especially since I have multiple computers. The next logical step: host my own DNS server on an extra raspberry 
 
 
 [yak-shaver]: http://urlgoeshere
