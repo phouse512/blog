@@ -60,7 +60,9 @@ The netgear router in my apartment allows for you to specify custom DNS servers,
 
 2 days into my home installation, my internet stopped working, and I was no longer able to connect on the VPN to my home network. When I physically able to see that the raspberry pi's were on, but something was keeping them from operating normally. After a little more digging, I realized I had forgotten that I had set the raspberry pi's static ip addresses through the router, but the router's dhcp server was no longer running and saving those ip's.
 
-From what I can tell: 1) someone accidentally unplugged the raspberry pi's but realized and plugged them back in. 2) because the pi's didn't have static ip addresses, when they connected (via Ethernet) they grabbed whatever ips they could. 3) The router had my DNS server's ip hard coded, so when the pi's changed, a device could no longer resolve hostnames. 4) the port forwarded for the vpn also pointed at a static address
+From what I can tell: 1) someone accidentally unplugged the raspberry pi's but realized and plugged them back in. 2) because the pi's didn't have static ip addresses, when they connected (via Ethernet) they grabbed whatever ips they could. 3) The router had my DNS server's ip hard coded, so when the pi's changed, a device could no longer resolve hostnames. 4) the port forwarded for the vpn also pointed at a static address so outside connections couldn't resolve either.
+
+All-in-all, it was a pretty big mess, and there are still a few unanswered questions about why things turned
 
 
 [yak-shaver]: http://urlgoeshere
