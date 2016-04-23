@@ -3,7 +3,7 @@ layout: post
 title:  "Understanding Django's prefetch_related helper"
 date:   2016-03-08 18:50:35 -0600
 categories: django orm
-comments: true
+comments: false
 ---
 
 If you're anything like me, using the Django ORM can be a tricky and confusing experience without much clue as to what's going on underneath the covers. This usually leads me to writing queries from scratch and dealing with error handling manually, but today I'll try to help you make sense of the `prefetch_related` method and how it can be used. I'm going to assume you have a working understanding of Django, so if some of the assumptions I make below don't make sense to you, make sure to check out the [basic Django tutorial][django-starting] first.
