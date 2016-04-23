@@ -3,7 +3,7 @@ layout: post
 title: "Building Infrastructure with Raspberry Pi's"
 date: 2016-04-10 12:30:31 -0600
 categories: infrastructure raspberrypi
-comments: true
+comments: false
 ---
 
 With most of my programming projects, you could consider me a textbook
@@ -54,13 +54,12 @@ The netgear router in my apartment allows for you to specify custom DNS servers,
 
 2 days into my home installation, my internet stopped working, and I was no longer able to connect on the VPN to my home network. When I physically able to see that the raspberry pi's were on, but something was keeping them from operating normally. After a little more digging, I realized I had forgotten that I had set the raspberry pi's static ip addresses through the router, but the router's dhcp server was no longer running and saving those ip's.
 
-From what I can tell: 1) someone accidentally unplugged the raspberry pi's but realized and plugged them back in. 2) because the pi's didn't have static ip addresses, when they connected (via Ethernet) they grabbed whatever ips they could. 3) The router had my DNS server's ip hard coded, so when the pi's changed, a device could no longer resolve hostnames. 4) the port forwarded for the vpn also pointed at a static address so outside connections couldn't resolve either. 5) Not only were existing devices not able to connect to the Internet, new devices could also not connect without manually specifying an ip and trying (most devices use DHCP by default).
+From what I can tell: _1)_ someone accidentally unplugged the raspberry pi's but realized and plugged them back in. _2)_ because the pi's didn't have static ip addresses, when they connected (via Ethernet) they grabbed whatever ips they could. _3)_ The router had my DNS server's ip hard coded, so when the pi's changed, a device could no longer resolve hostnames. _4)_ the port forwarded for the vpn also pointed at a static address so outside connections couldn't resolve either. _5)_ Not only were existing devices not able to connect to the Internet, new devices could also not connect without manually specifying an ip and trying (most devices use DHCP by default).
 
 All-in-all, it was a pretty big mess, and there are still a few unanswered questions about why things turned out the way they did. I'm still not sure how a local network resolves the location of the DHCP server if the router dhcp is turned off, and subnets are still a black-hole to me but I learned from my mistakes and know a little more about running your own little sliver of the Internet.
 
-Now..time to work on that Graphite server!
+Now.. time to get Graphite up and running!
 
-
-[yak-shaver]: http://urlgoeshere
+[yak-shaver]: http://sethgodin.typepad.com/seths_blog/2005/03/dont_shave_that.html
 [dd-client]: https://sourceforge.net/p/ddclient/wiki/Home/
-[pi-hole]: http://linkyk
+[pi-hole]: https://pi-hole.net/
