@@ -6,9 +6,7 @@ categories: infrastructure piper github
 comments: false
 ---
 
-Like many developers out there, I'm a pretty avid user of Github, and I use it
-for all of my private and public writing and programming. Until recently, I had
-been thinking about moving my repos into a self-hosted service such as [gitlab][gitlab], but when Github began offering [unlimited repos][unlimited-repos], I decided to stick around for a little longer. With that being said, there is a tremendous amount of personal metadata for any heavy user of Github, especially when used for both work and play. 
+Like many developers out there, I'm a pretty avid user of Github, and I use it for all of my private and public writing and programming. Until recently, I had been thinking about moving my repos into a self-hosted service such as [gitlab][gitlab], but when Github began offering [unlimited repos][unlimited-repos], I decided to stick around for a little longer. With that being said, there is a tremendous amount of personal metadata for any heavy user of Github, especially when used for both work and play. 
 
 
 
