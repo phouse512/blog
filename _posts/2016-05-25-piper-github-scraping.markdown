@@ -18,7 +18,7 @@ as of writing this post, this is v3 of the github api and I doubt that every cha
 
 1. Grab every git repository for a given user, using [this endpoint][github-get-repos]. One important thing here that I had to mess around with here was which repos would actually get returned from this call. Depending on your github usage/flow, you'll have to tweak the `visibility`, `affiliation`, and `type` parameters to get exactly what you want.
 
-2. For each of the repositories, my aggregator then uses [this endpoint][github-get-commits-for-repo] to grab all the recent commits made by the auth'd user for that repo. Once again, some configuring of the `sha` and `since` params will get you what you want, namely which branches you want to track, and how far back you want to go back. The shas returned by Github here are what you'll need for the following query to get the actual commit.
+2. For each of the repositories, my aggregator then [grabs all of the recent commits][github-get-commits-for-repo] made by the auth'd user for that repo. Once again, some configuring of the `sha` and `since` params will get you what you want, namely which branches you want to track, and how far back you want to go back. The shas returned by Github here are what you'll need for the following query to get the actual commit.
 
 3. Now with this list of shas, this [final endpoint][github-commits-from-sha]
    will return a fully populated commit that has full addition/deletion counts,
@@ -33,11 +33,13 @@ everything I need to build notifications and some sort of interface.
 
 For a while I've had a cheap Android tablet sitting on my desk collecting dust,
 and I've toyed with the idea of putting it on my wall to display relevant
-metrics, such as these I am now collecting. In the future, I want to build some
-more advanced trend-detection and smart grouping, but for now a simple endpoint
-that 'tails' the latest commit activity will be enough to get started with.
+metrics, such as these. In the future, I want to build some more advanced trend-detection and smart grouping, but for now a simple endpoint that 'tails' the latest commit activity will be enough to get started with.
 
-
+If you're curious about what the code looks like, you can take a look at the
+[piper repo][piper], hosted on Github. I'm slowly adding unit tests to the
+scraping code as to help make it less brittle, so take it with a grain of salt.
+If you have ideas for how to deal with branches, organizations, and other git
+metrics worth checking, create an issue or send an email!
 
 
 
@@ -48,3 +50,4 @@ that 'tails' the latest commit activity will be enough to get started with.
 [github-get-commits-for-repo]: https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository
 [github-get-commits-from-sha]: https://developer.github.com/v3/repos/commits/#get-a-single-commit
 [set-cron-job]: https://www.setcronjob.com/
+[piper]: https://github.com/phouse512/piper
