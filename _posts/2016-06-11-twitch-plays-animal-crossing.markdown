@@ -6,7 +6,7 @@ categories: twitch crowdsourcing python emulators
 comments: false
 ---
 
-If you haven't heard of {Twitch Plays Pokemon][tpp], you should check out that
+If you haven't heard of [Twitch Plays Pokemon][tpp], you should check out that
 Wikipedia article to get some bacgkround so that when I reference Twitch Plays
 Pokemon (TPP), it makes sense. Recently I began to wonder about the possibility
 of experimenting with another system I grew up with, the Gamecube. The GC
@@ -127,20 +127,18 @@ of the game. Adding a custom command that would allow for users' to set this
 could potentially turn out horribly but it could also be very useful, so it'll
 be the next little experiment I try.
 
-
-
-
-
-
-High Level Points To discuss:
- - where the idea came from
- - how I went about getting the dolphin piping to work
-    - include references in docs to dolphin prs
- - basic overview of architecture
-    - pretty much a design doc
- - first run review
- - final takeaways
- - possible other solutions
+If you've made it this far, thanks for reading! Building this was a lot of fun
+and I learned a lot from much of the poor multi-threaded application code
+I wrote, but it was great practice. If you're interested in reading some of the
+code I wrote for this, you can check it out on github [here][arena]. If you
+want to see the actual stream, it's hosted on twitch of course, and it's found
+[here][wisotv]. If you have any comments, ideas, or suggestions, feel free to
+open an issue on Github or email me!
 
 [twitch-chat-oauth]: http://www.twitchapps.com/tmi/
 [spxtr]: https://github.com/spxtr
+[arena]: https://github.com/phouse512/arena
+[wisotv]: https://www.twitch.tv/wisotv
+[gc-controller-pipes]: https://github.com/dolphin-emu/dolphin/pull/3170
+[dolphin]: https://dolphin-emu.org/
+[tpp]: https://en.wikipedia.org/wiki/Twitch_Plays_Pok%C3%A9mon
