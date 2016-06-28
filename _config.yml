@@ -17,3 +17,5 @@ github_username:  phouse512
 # Build settings
 markdown: kramdown
 future: true
+
+gems: [jekyll-seo-tag]
