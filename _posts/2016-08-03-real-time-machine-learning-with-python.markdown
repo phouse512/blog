@@ -26,7 +26,7 @@ computation will be performed as quickly as possible so that the user can get
 near real-time feedback on what is happening.
 
 The more we thought about the problem, the more we realized that there are two
-distinct challenges here that can be de-coupled and tacked on their own:
+distinct challenges here that can be de-coupled and tackled on their own:
 
 1. event-detection: before we can even classify a signal, we need an actual
    signal to classify. Because every second we are gaining 10s of new
