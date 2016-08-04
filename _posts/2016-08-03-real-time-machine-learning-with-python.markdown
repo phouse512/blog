@@ -7,9 +7,17 @@ comments: false
 ---
 
 This past month, I recently quit my job to begin working full-time on
-a hardware IoT product. As one of the lead developers on the project
+a hardware IoT product. We work with lots of sensor data that needs to be
+organized and disaggregated into human-readable signals. An example of a single
+stream of data that comes through our system looks something like the graph
+listed below:
 
-<some information about the problem here> <include graph>
+![data-graph](https://raw.githubusercontent.com/phouse512/blog/master/imgs/IMG_0189.png)
+
+One of our goals was to build a prediction system that would be able to in real-time
+identify what kinds of systems are producing these signals. It was a lot of
+work, but also very interesting so I figured I would write a little about it
+here.
 
 the sky-high view
 =================
@@ -173,7 +181,6 @@ off too early.
 If this at all sounds interesting to you, email me at my email given below and
 let's talk more about it, we could always use the help!
 
-[tpp]: https://en.wikipedia.org/wiki/Twitch_Plays_Pok%C3%A9mon
 [smoothing]: https://en.wikipedia.org/wiki/Smoothing
 [moving-average]: https://en.wikipedia.org/wiki/Moving_average
 [python-queue]: https://docs.python.org/3.5/library/multiprocessing.html#multiprocessing.Queue
