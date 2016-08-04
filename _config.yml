@@ -7,7 +7,7 @@
 
 # Site settings
 title: Philip House
-email:
+email: phouse512 at gmail dot com
 description: "A personal collection of thoughts on programming, learning, and other things."
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://phizzle.space" # the base hostname & protocol for your site
