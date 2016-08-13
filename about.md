@@ -9,6 +9,7 @@ Hi! My name is Phil, and I'm currently the CTO of [Amper][amper], a small hardwa
 This is a space for my personal projects, things that I've learned along the way, as well as any other random thoughts of mine. Feel free to email me or tweet at me with anything you'd like to talk about!
 
 Here are some things I'm interested in:
+
 - home automation: when I say home automation, I'm not just talking about
   an array of devices you control from your phone. The smart home should
   require less interaction from its inhabitants, not provide it with more
