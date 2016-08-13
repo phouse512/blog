@@ -9,6 +9,6 @@ permalink: /life/
     <li>
       { post.title }
     </li>
-
+  {% endfor %}
 </ul>
 
