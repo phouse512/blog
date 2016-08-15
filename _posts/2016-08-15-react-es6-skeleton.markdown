@@ -13,8 +13,9 @@ directly in the page, and I couldn't find out much info there on how to start
 bundling React with webpack. If you [google react es6 skeletons][google],
 you'll find a lot of options, and some pretty good ones as well. Unfortunately,
 I am a Javascript novice and many of the norms set up in some of these projects
-were foreign to me, so I wanted something slightly more barebones. I spent
-a short evening bundling up my work so that someone who is coming from 
+were foreign to me, so I wanted something slightly more barebones. 
+
+I spent a short evening bundling up my work so that someone who is coming from 
 other programming backgrounds will be able to start quickly. 
 You can find a link to the skeleton repo [here][my-skel]. It uses
 [webpack][webpack] to bundle your js, and it also includes Bootstrap for ease
