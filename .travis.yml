@@ -11,5 +11,6 @@ env:
 deploy:
   provider: script
   script: scripts/deploy
+  skip_cleanup: true
   on:
     branch: [stage, master]
