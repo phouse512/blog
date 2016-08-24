@@ -22,3 +22,5 @@ gems: [jekyll-seo-tag]
 
 collections:
 - life_posts
+
+stage: false
