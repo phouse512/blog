@@ -17,3 +17,4 @@ I previously did undergraduate research at the [Delta Lab][delta-lab], working o
 
 
 [delta-lab]: http://delta.northwestern.edu/
+[pathfinder]: http://pathfinding.space
