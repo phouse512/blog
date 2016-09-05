@@ -10,8 +10,8 @@ When I'm away from work and have the time, I enjoy working on a few projects, mo
 
 - [pathfinder][pathfinder]: a project built to help friends and internet
   strangers who are trying to become programmers. If you want to learn more,
-  check out my blog post and check out pathfinder itself at the link on the
-  left.
+  check out my [blog post]({% link _posts/2016-09-05-pathfinder-find-your-path.markdown %}) 
+  and check out pathfinder itself at the link on the left.
 
 I previously did undergraduate research at the [Delta Lab][delta-lab], working on a project related to learner-sourcing - an approach where motivated learners can contribute to larger, social and human computation problems.
 
