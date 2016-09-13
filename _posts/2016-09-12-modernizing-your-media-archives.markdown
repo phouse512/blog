@@ -21,13 +21,13 @@ luckily a friend had an earlier MacbookPro with a 9-pin Firewire port. iMovie
 made it easy to transfer, and now all of my videos are backed up in the cloud
 for the long-term! 
 
-I would recommend to any of you in the same boat as I was to look into modernizing your
+To any of you in the same boat as me, I recommend looking into modernizing your
 media collection. While in the past 20 years, formats for media
 storage have changed drastically (think of floppies, cassettes, CDs, etc.),
 with the prevalance and cost-efficiency of cloud storage, I think it's a safe
 bet to transfer your media now. In the next 5-10 years, it will only get harder
 to access and view any old media formats you might have as specialized media
-readers and adapters get harder to find.
+readers and adapters become more rare.
 
 By using a specialized cloud storage company, you put the burden on them to
 manage rotating hard-drives, hardware failure, [data rot][data], etc. You 
