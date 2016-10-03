@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Thoughts on intuitive user interfaces"
-date: 2016-09-12 18:32:00 -0600
+date: 2016-10-03 16:08:00 -0600
 categories: interfaces user-experience design
 comments: false
 ---
