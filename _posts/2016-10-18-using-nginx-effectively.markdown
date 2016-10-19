@@ -158,6 +158,8 @@ files, especially if you use [symlinks][sym].
 While every scenario is different, here is a diagram of my server
 configuration.
 
+![nginx config diagram]({{ site.url }}/assets/nginx.png)
+
 
 [proxy]: https://en.wikipedia.org/wiki/Reverse_proxy
 [for]: https://github.com/foreverjs/forever
