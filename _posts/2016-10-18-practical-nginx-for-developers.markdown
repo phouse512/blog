@@ -1,12 +1,11 @@
 ---
 layout: post
-title: "Practical Nginx"
+title: "Practical Nginx for Developers"
 date: 2016-10-18 05:53:00 -0600
 categories: linux nginx cloud
 comments: false
 ---
 
-## Outline of Nginx
 For those of you who've never heard of Nginx, it is a free, open-source,
 high-performance HTTP server and reverse proxy (taken from the [Nginx
 docs][docs]). While Nginx advertises itself as a high-performance,
@@ -24,7 +23,7 @@ that the outside world can't find out the server that is actually responsible
 for the requests. I've included a diagram below so you can get a better idea of
 what I'm talking about:
 
-[image yeahhhh]
+![reverse-proxy](https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Reverse_proxy_h2g2bob.svg/400px-Reverse_proxy_h2g2bob.svg.png)
 
 Reverse proxies have many usages and advantages, but I use Nginx mostly for
 it's ability to distribute incoming requests to several different servers.
