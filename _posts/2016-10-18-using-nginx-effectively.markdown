@@ -44,7 +44,6 @@ Django Configurations
 For those of you using Django, Nginx makes it easy to get your server pointed
 at a Django instance configured to run on localhost.
 
-
 ```
 server {
     listen 80;
@@ -87,13 +86,70 @@ HTTP packet as-is to the locally running Django server. The socket path here is
 also different for each user, and it again depends on how you've configured
 your Django application.
 
+Node Server Nginx Config
+========================
+
+Next, let's look at how we can configure Nginx to forward requests on to a Node
+http server we have running locally. Here is an example config:
+
+```
+server {
+    listen 80;
+    server_name <domain name>;
+
+    location / {
+    proxy_pass http://localhost:3000/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+This is a pretty simple configuration, and you'll recognize the first two lines
+from the previous Django server block. These lines instruct Nginx which port to
+use, and which server block to forward incoming requests to. 
+
+The `location / { ..` block uses `proxy_pass` to forward the request onto the
+node server running on localhost on port 3000. The rest of the http
+configuration details are specifics I use based on my personal configuration.
+`proxy_pass` should be enough to get you off the ground for now. As long as you
+have a long-running instance of your node server running ([forever][for] is
+decent at this), Nginx will easily be able to send requests to it.
+
+Static Websites with Nginx
+==========================
+
+Not only is Nginx a great reverse proxy, it is also a very useful HTTP server
+that can deliver static files on your machines. It's pretty simple, and here is
+the config that can help you do that:
+
+```
+server {
+  listen 80;
+  server_name evan.phizzle.space;
+
+  root /home/phil/portfolio-website/framework;
+  index portfolio_website.html;
+}
+```
+
+As shown above, the first two lines of the server block serve only to
+differentiate incoming requests. The important lines are the last two, that
+make use of `root` and `index`. The `root` command allow for you to set the
+directory on your machine that you would like to serve your static assets from.
+`index` then allows for you to specify the root html page of your site, from
+there as long as your anchor tags have the right relative paths, the rest of
+your site should work. This is a pretty simple configuration but it should get
+you off the ground for delivering a basic website.
+
+Multiple Server Blocks
+======================
+
 
 [proxy]: https://en.wikipedia.org/wiki/Reverse_proxy
+[for]: https://github.com/foreverjs/forever
 
-#### Nginx example for django
 
-#### Nginx example for node
-
-#### Nginx example for static
-
-#### Nginx multi server blocks 
