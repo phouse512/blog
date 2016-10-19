@@ -129,10 +129,10 @@ the config that can help you do that:
 ```
 server {
   listen 80;
-  server_name evan.phizzle.space;
+  server_name <domain_name>;
 
-  root /home/phil/portfolio-website/framework;
-  index portfolio_website.html;
+  root /home/user/path/to/static/website;
+  index home.html;
 }
 ```
 
@@ -148,8 +148,19 @@ you off the ground for delivering a basic website.
 Multiple Server Blocks
 ======================
 
+One of the great things about Nginx is that you can combine multiple server
+blocks together to set up some pretty complicated scenarios. While you can
+include one giant file in your Nginx `sites-enabled` directory, I prefer to
+have multiple small files for each service, each with their own server block.
+This makes it easier to add new configurations and manage your configuration
+files, especially if you use [symlinks][sym].
+
+While every scenario is different, here is a diagram of my server
+configuration.
+
 
 [proxy]: https://en.wikipedia.org/wiki/Reverse_proxy
 [for]: https://github.com/foreverjs/forever
+[sym]: https://kb.iu.edu/d/abbe
 
 
