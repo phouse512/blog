@@ -163,5 +163,5 @@ configuration.
 [proxy]: https://en.wikipedia.org/wiki/Reverse_proxy
 [for]: https://github.com/foreverjs/forever
 [sym]: https://kb.iu.edu/d/abbe
-
-
+[docs]: http://nginx.com/resources/wiki
+[perf]: https://www.rootusers.com/linux-web-server-performance-benchmark-2016-results/
