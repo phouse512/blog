@@ -3,7 +3,7 @@ layout: post
 title: "Practical Nginx for Developers"
 date: 2016-10-18 05:53:00 -0600
 categories: linux nginx cloud
-comments: false
+comments: true
 ---
 
 For those of you who have never heard of Nginx, it's a free, open-source,
@@ -35,7 +35,9 @@ that, but I also have different domain names and required paths for each of
 them. I'll go through some of the different use cases and share some of the
 Nginx configs that have been helpful for me in quickly getting my projects
 online. As a note, all of the below configurations are examples of a single
-Nginx instance on the same server as all of my web applications.
+Nginx instance on the same server as all of my web applications. With this,
+you'll be able to run multiple websites off of a single port on your Ubuntu
+instance.
 
 Django Configurations
 =====================
