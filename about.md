@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Hi! My name is Phil, and I'm currently the CTO of [Amper][amper], a small hardware startup in the (crowded) IoT space. I formally was a software engineer at [Sprout Social][sprout-social] in Chicago. I work in the world of web services and distributed systems, and usually find myself writing Java and Python, although lately I've been playing with Go.
+Hi! My name is Phil, and I'm currently the CTO of [Amper][amper], a small hardware startup in the (crowded) IoT space. I formerly was a software engineer at [Sprout Social][sprout-social] in Chicago. I work in the world of web services and distributed systems, and usually find myself writing Java and Python, although lately I've been playing with Go.
 
 This is a space for my personal projects, things that I've learned along the way, as well as any other random thoughts of mine. Feel free to email me or tweet at me with anything you'd like to talk about!
 
