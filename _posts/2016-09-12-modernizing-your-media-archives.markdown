@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Modernizing Your Media Archives"
-date: 2016-09-12 18:32:00 -0600
+date: 2016-09-12 15:32:00 -0600
 categories: cloud s3 media storage
 comments: false
 ---
