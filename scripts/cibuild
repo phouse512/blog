@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 set -e # halt script on error
 
-ls -lR ./_posts
-cat ./_posts/2016-09-12-modernizing-your-media-archives.markdown
 bundle exec jekyll build
-ls -lR ./_site
-grep -r "http://phizzle.space/cloud/s3/media/storage/2016/09/13/modernizing-your-media-archives.html" .
 bundle exec htmlproofer --http-status-ignore 403 ./_site
