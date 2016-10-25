@@ -4,10 +4,6 @@ rvm:
 
 script: ./scripts/cibuild
 
-env:
-  global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-
 deploy:
   provider: script
   script: ./scripts/deploy.sh
