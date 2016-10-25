@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e # halt script on error
 
+ls -lR ./_posts
 bundle exec jekyll build
 ls -lR ./_site
 bundle exec htmlproofer --http-status-ignore 403 ./_site
