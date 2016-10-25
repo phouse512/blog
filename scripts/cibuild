@@ -2,6 +2,7 @@
 set -e # halt script on error
 
 ls -lR ./_posts
+cat ./_posts/2016-09-12-modernizing-your-media-archives.markdown
 bundle exec jekyll build
 ls -lR ./_site
 bundle exec htmlproofer --http-status-ignore 403 ./_site
