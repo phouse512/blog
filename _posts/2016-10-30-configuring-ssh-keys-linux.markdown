@@ -30,11 +30,9 @@ access any server with it's public key counterpart without any additional
 security. Additionally, you should always encrypt your private key on your local machine with
 a passphrase but more on that later.
 
-Here is a diagram that illustrates the 
+Here is a diagram that illustrates at a high level how these keys are used:
 
-
-
-[diagram about ssh client and server]
+![ssh keys]({{ site.url }}/assets/ssh_keys.png)
 
 As you can also tell from the above, your personal SSH key-pair can be used to
 access multiple servers. As long as you put your public key in the
