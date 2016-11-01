@@ -36,7 +36,57 @@ Here is a diagram that illustrates the
 
 [diagram about ssh client and server]
 
-[diagram between multiple users and multiple servers]
+As you can also tell from the above, your personal SSH key-pair can be used to
+access multiple servers. As long as you put your public key in the
+`authorized_keys` file of the user you want to connect as, you won't have any
+more configuration work. We'll see what this looks like as we step through the
+setup process.
+
+
+#### Creating your SSH keys
+
+The responsbility of creating an SSH key pair falls to the remote user, the
+client. These next set of instructions will pertain only to this process, and
+all should be run on your local machine. There is a utility called `ssh-keygen`
+that should already be installed. Run it like this:
+
+```
+ssh-keygen
+```
+
+You'll be given a prompt that looks like the following:
+
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/username/.ssh/id_rsa):
+```
+
+This prompt asks you where you would like to have your key pair stored, and
+this default location is usually just fine. SSH configuration info is by
+default stored in the `~/.ssh` directory. Unless you changed the name of the
+key, the the private key will be named `id_rsa` and its public key
+`id_rsa.pub`. If you decide to change this, you will have some extra
+configuration work to get your SSH client to find the keys.
+
+As a note, if you already have a private/public key pair in your `~/.ssh`
+directory, it will ask you if you want to overwrite the old one. Do _not_ do
+this unless you are ok with nullifying your existing SSH access to servers.
+
+```
+Created directory '/home/username/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again: 
+```
+
+The next prompt will ask you for a passphrase for your key pair. This is
+optional, but it is *highly* recommended. Using a passphrase for SSH does not
+detract from the security benefit SSH gives. A passphrase is used only
+_locally_ to decrypt the the key to be used in the process described above. The
+passphrase or the private key are _never_ passed across the network, as what
+happens when using password authentication with SSH.
+
+At this point, you are done! You should have an `id_rsa` and `id_rsa.pub` file
+that can now be used to connect to servers.
 
 
 [concrete details about ssh key setup]
