@@ -20,19 +20,21 @@ connections to remote SSH servers. A key pair consists of two parts, a public
 key and a private key. The *public* key can be shared without worry about
 security - it is public as its name implies. By themselves, these keys are
 useless without their private counterparts. Public keys are used to encrypt
-messages that only their respective private keys can decrypt, but are useless
-for anything more.
+messages that only their respective private keys can decrypt, nothing more.
 
 On the other hand, *private* keys must be kept secure and secret. These keys
 are kept by the client and are used to decrypt messages in the SSH key
 handshake. If a hacker obtains your private key, the hacker will be able to
-access any server with it's public key counterpart without any additional
-security. Additionally, you should always encrypt your private key on your local machine with
+access any server with it's public key counterpart. Additionally, you should always encrypt your private key on your local machine with
 a passphrase but more on that later.
 
 Here is a diagram that illustrates at a high level how these keys are used:
 
 ![ssh keys]({{ site.url }}/assets/ssh_keys.png)
+
+The transaction to authenticate the user is pretty simple, and the keys are
+never passed over the network to do it. It simply depends on the cryptographic
+security of the key-pair to ensure the client is who the server thinks it is.
 
 As you can also tell from the above, your personal SSH key-pair can be used to
 access multiple servers. As long as you put your public key in the
@@ -43,7 +45,7 @@ setup process.
 
 #### Creating your SSH keys
 
-The responsbility of creating an SSH key pair falls to the remote user, the
+The responsibility of creating an SSH key pair falls to the remote user, the
 client. These next set of instructions will pertain only to this process, and
 all should be run on your local machine. There is a utility called `ssh-keygen`
 that should already be installed. Run it like this:
@@ -80,8 +82,8 @@ The next prompt will ask you for a passphrase for your key pair. This is
 optional, but it is *highly* recommended. Using a passphrase for SSH does not
 detract from the security benefit SSH gives. A passphrase is used only
 _locally_ to decrypt the the key to be used in the process described above. The
-passphrase or the private key are _never_ passed across the network, as what
-happens when using password authentication with SSH.
+passphrase or the private key are _never_ passed across the network, as your
+password is when using password authentication with SSH.
 
 At this point, you are done! You should have an `id_rsa` and `id_rsa.pub` file
 that can now be used to connect to servers.
