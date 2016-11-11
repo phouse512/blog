@@ -22,7 +22,7 @@ manipulate `iptables` for you. The following diagram explains how the utilities
 work together to help filter out unnecessary traffic.
 
 
-![diagram here boi][test]:
+![ufw diagram]({{ site.url }}/assets/ufw.png)
 
 #### Configuration
 `ufw` truly lives up to its name and is easy to set as we'll see in
