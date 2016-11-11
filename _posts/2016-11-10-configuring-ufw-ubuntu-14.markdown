@@ -21,7 +21,6 @@ blocking packets (`iptables` still is), it simplifies the commands needed to
 manipulate `iptables` for you. The following diagram explains how the utilities
 work together to help filter out unnecessary traffic.
 
-
 ![ufw diagram]({{ site.url }}/assets/ufw.png)
 
 #### Configuration
@@ -31,7 +30,7 @@ following:
 
 `sudo ufw status`
 
-More likely then not, it will you that it is inactive. If it is active, it will
+More likely then not, it will tell you that it is inactive. If it is active, it will
 give you a list of the current firewall rules that we'll go over soon. In the
 rare case that `ufw` is not already installed on your machine, run the
 following and you'll be golden:
@@ -112,8 +111,8 @@ If it looks something like that, you should be all set! Your server is now
 secured for the rules that you allowed. Before you log out of your remote
 server, now would be a good time to check that you can still SSH into your
 machine. Open up a new terminal window and quickly verify that you didn't
-accidentally block your ability to control your server. It'll save you much
-potential hassle ~
+accidentally block your ability to control your server. It'll save you a bunch
+of potential headaches.
 
 #### What's Next
 
@@ -128,7 +127,7 @@ useful in the future:
   you might be hitting the EC2 network firewall (outside of the machine). In
   that case, you'll need to modify your [security groups][sgs] to allow traffic
   for those ports, _as well as configure UFW_.
-- learning more about iptables - if you are trying to advanced network
+- learning more about iptables - if you are trying to perform advanced network
   operations, such as operating a NAT server or something similar, you'll have
   to get into the nitty gritty of `iptables`. Good luck!
 
