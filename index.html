@@ -4,16 +4,19 @@ layout: default
 
 <div class="home">
 
-  <h1 class="page-heading">Recent Blog Posts</h1>
+    <h3>about</h3>
+    hi, and welcome! this site is a record of my various hobbies and interests, and is usually quite random. some of my most recent writings are below, and you can find more if you look around through the <a href="/archive/">archives</a>.
 
+  <hr style="margin-top: 10px; opacity: .5;" />
+  <h3 class="page-heading">recent posts</h3>
   <ul class="post-list">
-    {% for post in site.posts %}
+    {% for post in site.posts limit:5 %}
       <li>
         <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
-        <h2>
+        <h4>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
+        </h4>
       </li>
     {% endfor %}
   </ul>

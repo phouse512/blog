@@ -10,18 +10,14 @@ This is a space for my personal projects, things that I've learned along the way
 
 Here are some things I'm interested in:
 
-- home automation: when I say home automation, I'm not just talking about
-  an array of devices you control from your phone. The smart home should
-  require less interaction from its inhabitants, not provide it with more
-  interfaces with which to control it.
+- games: I grew up up playing a mixture of board games and video games and
+  still do. I [write][games] a little bit about games I play and watch.
 - learning: the vast amount of information now available at our fingertips is
   mindblowing, but for someone with 0 knowledge of how to get from novice to
   expert, the knowledge dump of the internet doesn't always work. We just need
   to figure out how to organize it.
 - making things: I like making things, and I like talking and working with 
   people who also like to make things.
-- self-driving cars: my opinions on this are long and best saved for a future
-  blog post.
 - personal data: the amount of data that exists for a single person is huge.
   I'm not just talking about the number of web services with API's that 
   someone is signed up for. Think about everything in your life, the time you
@@ -32,3 +28,4 @@ Here are some things I'm interested in:
 
 [sprout-social]: http://sproutsocial.com/
 [amper]: http://getamper.io/
+[games]: http://games.phizzle.space/
