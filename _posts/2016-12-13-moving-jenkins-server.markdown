@@ -24,12 +24,20 @@ started, but there were many small things to fix along the way that I'll write
 about.
 
 Here are the major components to migrating:
-- on your new server, install jenkins (show command here)
-- on both servers, stop jenkins by doing (show command)
-- archive /var/lib/jenkins using tar
-- scp the tar file to the new server
-- unzip the directory on the new server, and move it into /var/lib/jenkins
-- launch new jenkins
+- on your new server, install jenkins. I am running Ubuntu, so I followed this
+  [article][jenkins-install].
+- on both servers, stop jenkins by running `sudo service jenkins stop` (again,
+  I am running Ubuntu 14.04). Your mileage may vary depending on your system.
+- next, you'll need to zip up your `JENKINS_HOME` directory before sending it
+  to your new server. For my installation, the default was in
+  `/var/lib/jenkins`. I used `tar -zcvf jenkins-backup.tar.gz
+  /var/lib/jenkins/*`.
+- you can now use [scp][scp] to send the entire tar package to your new server.
+  If you don't have SSH credentials set up, check out this [blog
+  post][own_ssh].
+- unzip the file into your new `JENKINS_HOME` using `tar xvzf <tar_name>`.
+- now you are ready to restart Jenkins! Run `sudo service jenkins start` to get
+  jenkins running again with your new configuration.
 
 
 ### Pitfalls
@@ -121,3 +129,7 @@ This shouldn't be too hard if you centralize all of your documentation :)
 [htop]: https://hisham.hm/htop/
 [ack]: http://beyondgrep.com/
 [swap_tut]: https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04
+[own_ssh]: http://www.phizzle.space/linux/cloud/ssh/security/github/2016/10/30/configuring-ssh-keys-linux.html
+[scp]: http://www.hypexr.org/linux_scp_help.php
+[jenkins-install]: https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+on+Ubuntu
+
