@@ -67,7 +67,7 @@ rsync -a . phil@localhost:/home/user/my_custom_path/
 
 #### Memory Issues
 
-Jenkins is a Java service, and it will eat memory for every meal of the week if 
+Jenkins is a Java service, and it will eat memory every meal of the week if 
 you let it. After I copied over my Jenkins configuration and updated my old
 jobs, it was time to start Jenkins on the new server. While I restarted,
 I tailed the logs, and everything looked fine but the processes would randomly
