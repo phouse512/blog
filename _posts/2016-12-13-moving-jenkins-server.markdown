@@ -23,8 +23,6 @@ that gives high level steps to migration. It gave me a good foundation to get
 started, but there were many small things to fix along the way that I'll write
 about.
 
-<for all below points, should be few sentences per..>
-
 Here are the major components to migrating:
 - on your new server, install jenkins (show command here)
 - on both servers, stop jenkins by doing (show command)
@@ -109,10 +107,14 @@ of RAM.
 Finally, I also added some swap for heavy loads, using one of Digital Ocean's
 fantastic [tutorials][swap_tut].
 
-#### Updating Documentation/webhooks 
+#### Updating Documentation/webhooks
 
-<self explanatory>
+The final and most obvious heads-up is to make sure that all of your services,
+processes and workflows that depend on Jenkins switch to the new server
+location. Don't forget your GitHub hooks, integrated tests, and anything else
+that depends on Jenkins. 
 
+This shouldn't be too hard if you centralize all of your documentation :)
 
 
 [jenkins-so]: http://stackoverflow.com/questions/8724939/how-to-move-jenkins-from-one-pc-to-another
