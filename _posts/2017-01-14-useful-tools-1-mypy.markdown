@@ -10,8 +10,9 @@ Reflecting on 2016, I began thinking about all of the tools I use on my
 computer for programming, productivity and the web. For tools that we use
 everyday, we have lots of shortcuts and subtle habits here and there. This post
 is the first in a series documenting my workflows and tools I use on a regular
-basis. Below is a half-baked list of upcoming posts (the order may change):
+basis. Below is a half-baked list of posts in this series (the order may change):
 
+- mypy
 - vim and plugins
 - ack and jq
 - Todoist
