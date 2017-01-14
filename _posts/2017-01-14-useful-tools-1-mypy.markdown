@@ -51,7 +51,44 @@ set to get started!
 
 #### Examples and Basic Usage
 
-Let's look at a basic example
+Let's look at a basic example of annotating a method annotation in Python 3.
+Here is an example function:
+
+```
+def say_hello(name: str) -> str:
+    return "hi my friend %s" % name
+
+say_hello("valid")
+say_hello(u"invalid")
+```
+
+There are two annotations here, one for the method argument and one for the
+return value. We can use mypy by running the following command: `mypy test.py`.
+You'll see the following complaint from mypy:
+
+```
+test.py:5: error: Argument 1 to "say_hello" has incompatible type "int"; expected "str"
+```
+
+While the above code still runs because of the duck-typing properties of
+Python, mypy loads the argument annotation and detects the mismatch. Not only
+do these annotations help catch bugs, but it makes it much easier to tell what
+the function actually does.
+
+Mypy comes with some built-in types, such as the `str` shown above. Here is
+a brief list of the most common ones:
+
+- `int`: integer of arbitrary size
+- `float`: floating point number
+- `bool`: boolean value
+- `str`: unicode string
+- `bytes`: 8-bit string
+- `object`: Python object, the common base class
+- `List[str]`: list of `str` objects
+- `Dict[str, int]`: dictionary hash from `str` to `int` values
+- `Iterable[bytes]`: iterable object of `bytes`
+- `Sequence[float]`: sequence of `float` objects
+- `Any`: dynamically typed object that can be of any type
 
 #### Contributing to Typeshed
 
@@ -90,8 +127,8 @@ PYTHONPATH=~/your/path/to/your/mypy_clone python3 -m mypy -f <flags>
 ```
 
 In the above, you run mypy as a python package using your cloned mypy repo, as
-well as the changes you've made. Once you're satisfied, you can push your
-changes to your fork and open a pull-request from GitHub.
+well as the changes you've made. Once you're satisfied, changes can be pushed
+to your fork and you can open a pull-request from GitHub.
 
 
 #### Learning More
