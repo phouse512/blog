@@ -71,8 +71,8 @@ description of how I contribute to the project.
 
 The setup is pretty simple, just clone the [mypy repo][repo] to your local
 machine. Just make sure that this location is different from where you
-installed mypy previously. You'll also want to [fork][fork] the [typeshed
-repo][typeshed-repo] so you can set your fork as a remote to push to. Use `git
+installed mypy previously. You'll also want to [fork][fork] the [typeshed repo][typeshedrepo]
+so you can set your fork as a remote to push to. Use `git
 remote add <your_fork_name> <your_fork_location_url>` to set it up.
 
 After that, it's pretty simple when it comes time to start working on an issue:
@@ -84,7 +84,8 @@ After that, it's pretty simple when it comes time to start working on an issue:
   installed ones. The simplest way (as recommended by Guido himself) is to run
   mypy using a command like this: 
 
-``` PYTHONPATH=~/your/path/to/your/mypy_clone python3 -m mypy -f <flags>
+``` 
+PYTHONPATH=~/your/path/to/your/mypy_clone python3 -m mypy -f <flags>
 <your_files>
 ```
 
@@ -95,7 +96,15 @@ changes to your fork and open a pull-request from GitHub.
 
 #### Learning More
 
-[typeshed-repo]: https://github.com/python/typeshed
+This is a really brief introduction to mypy, and you'll be able to find much
+more comprehensive explanations and documentation online. I highly recommend
+the [mypy home page][homepage] as it explains a lot of the motivations and
+reasoning for mypy. Just for documentation, the [mypy documentation][docs] are
+incredibly helpful as well.
+
+[docs]: http://mypy.readthedocs.io/en/latest/index.html
+[homepage]: http://www.mypy-lang.org/
+[typeshedrepo]: https://github.com/python/typeshed
 [issues]: https://github.com/python/typeshed/issues
 [repo]: https://github.com/python/mypy
 [fork]: https://help.github.com/articles/fork-a-repo/
