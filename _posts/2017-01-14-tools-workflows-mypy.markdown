@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Useful Tools #1: mypy"
+title: "Tools and Workflows: mypy"
 date: 2017-01-14 13:52:00 -0600
 categories: tools mypy
 comments: true
