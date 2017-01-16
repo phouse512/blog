@@ -25,6 +25,8 @@ order and content may change):
 - jekyll
 - to be continued..
 
+Without further ado, let's get started with the first on the list, mypy.
+
 ### mypy
 
 As I've learned and written more Python and Java, one of my biggest complaints
@@ -78,6 +80,9 @@ While the above code still runs because of the duck-typing properties of
 Python, mypy loads the argument annotation and detects the mismatch. Not only
 do these annotations help catch bugs, but it makes it much easier to tell what
 the function actually does.
+
+As a side-note, the syntax and usage for Python 2 is slightly different, so
+check out the [documentation for Python 2.7][python2doc].
 
 You can also set the type of a variable with an inline notation, such as shown
 below:
@@ -179,3 +184,4 @@ about it!
 [issues]: https://github.com/python/typeshed/issues
 [repo]: https://github.com/python/mypy
 [fork]: https://help.github.com/articles/fork-a-repo/
+[python2doc]: http://mypy.readthedocs.io/en/latest/python2.html
