@@ -75,6 +75,23 @@ Python, mypy loads the argument annotation and detects the mismatch. Not only
 do these annotations help catch bugs, but it makes it much easier to tell what
 the function actually does.
 
+You can also set the type of a variable with an inline notation, such as shown
+below:
+
+```
+class Car:
+    speed = 0  # type: int
+    direction_list = []  # type: List[int]
+
+car = Car()
+car.speed = 3  # this is valid
+car.speed = "3"  # this is not
+```
+
+In the above, we annotate the types of two class variables using inline
+annotations. When accessing and mutating class variables, mypy applies type
+annotations to validate assignments as well.
+
 Mypy comes with some built-in types, such as the `str` shown above. Here is
 a brief list of the most common ones:
 
@@ -89,6 +106,16 @@ a brief list of the most common ones:
 - `Iterable[bytes]`: iterable object of `bytes`
 - `Sequence[float]`: sequence of `float` objects
 - `Any`: dynamically typed object that can be of any type
+
+You can use these types in method definitions, class variable annotations, and
+where else you would like to annotate types. As a note, to use the types
+`List`, `Dict`, `Iterable`, `Sequence` or `Any`, you need to import them from
+the `typing` module. If you have already installed mypy, this won't be
+a problem, and here's what an import line might look like for you:
+
+```
+from typing import Any, Dict, List
+```
 
 #### Contributing to Typeshed
 
