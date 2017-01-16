@@ -7,10 +7,14 @@ comments: true
 ---
 
 Reflecting on 2016, I began thinking about all of the tools I use on my
-computer for programming, productivity and the web. For tools that we use
-everyday, we have lots of shortcuts and subtle habits here and there. This post
-is the first in a series documenting my workflows and tools I use on a regular
-basis. Below is a half-baked list of posts in this series (the order may change):
+computer for programming, productivity and the web. For the tools that we use
+everyday, we have lots of shortcuts and subtle habits here and there. I'm not
+always conscious of the many habits I have on my computer, but I want to start
+thinking about why and how I do things certain ways.
+
+This post is the first in a series documenting the workflows and tools I use
+on a regular basis. Below is a half-baked list of posts in this series (the
+order and content may change):
 
 - mypy
 - vim and plugins
@@ -31,7 +35,7 @@ what is being passed from method to method. This is where mypy can help.
 
 Mypy is essentially a linting tool that statically type checks your Python
 code. As you write code, if you add type annotations to the classes, variables,
-and other elements, mypy is able to type check and find easy bugs. There are
+and other elements, mypy is able to type check and find typed errors. There are
 a few different ways of adding annotations depending on Python version, but
 overall they are just hints in the code. Mypy is a static analyzer, and will
 never interfere with your code at run-time, it simply helps you find bugs and
@@ -40,7 +44,7 @@ understand your code.
 #### Installation and Setup
 
 To install, mypy requires Python 3.3 or later to use. You can install it by
-running like this:
+running this:
 
 ```
 python3 -m pip install mypy
@@ -59,7 +63,7 @@ def say_hello(name: str) -> str:
     return "hi my friend %s" % name
 
 say_hello("valid")
-say_hello(u"invalid")
+say_hello(30)
 ```
 
 There are two annotations here, one for the method argument and one for the
@@ -153,8 +157,8 @@ PYTHONPATH=~/your/path/to/your/mypy_clone python3 -m mypy -f <flags>
 <your_files>
 ```
 
-In the above, you run mypy as a python package using your cloned mypy repo, as
-well as the changes you've made. Once you're satisfied, changes can be pushed
+In the above, you run mypy as a python package using your cloned mypy repo so
+that your changes are tested. Once you're satisfied, changes can be pushed
 to your fork and you can open a pull-request from GitHub.
 
 
@@ -165,6 +169,9 @@ more comprehensive explanations and documentation online. I highly recommend
 the [mypy home page][homepage] as it explains a lot of the motivations and
 reasoning for mypy. Just for documentation, the [mypy documentation][docs] are
 incredibly helpful as well.
+
+If you use mypy and have had good experiences with it, I would love to hear
+about it!
 
 [docs]: http://mypy.readthedocs.io/en/latest/index.html
 [homepage]: http://www.mypy-lang.org/
