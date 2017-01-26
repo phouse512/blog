@@ -51,11 +51,11 @@ func (r HttpResponse) validResponse() boolean {
 The method is simple, but the important thing to take note of here is the
 section of code `func (r HttpResponse)`. This means that the struct is being
 passed by value into the method. When a method is a value receiver, it means
-that you *cannot modify the struct fields* * because the struct is being passed
+that you *cannot modify the struct fields* ** because the struct is being passed
 by value. This means that you can use value receivers when you want to use the
 fields of a struct but not modify them.
 
-* barring special types, which we'll discuss further on.
+** barring special types, which we'll discuss further on.
 
 #### pointer receivers
 the example of a pointer receiver
