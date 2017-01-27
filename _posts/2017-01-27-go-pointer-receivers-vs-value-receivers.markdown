@@ -149,7 +149,6 @@ func New(status_code int) (*HttpResponse, error) {
 
     r.headers = make(map[string]string)
     r.status_code = status_code
-    r.body = ""
     return r, nil
 }
 
@@ -186,6 +185,33 @@ func main() {
     fmt.Println(response.status_code) // 300, correct use of a pointer receiver
 
     response.add_header("Content-Type", "text/javascript")
-    fmt.Println(response.headers) // map[Content-Type:text/javascript
+    fmt.Println(response.headers) // map[Content-Type:text/javascript]
 }
 ```
+
+The long example above highlights many of the variations we discussed. There is
+an example of using value receivers with standard types, such as `int`s. You
+also see what happens when you use special types such as `map`s or `channel`s
+with value recievers.
+
+Ultimately, the lesson here is not about understanding the situations that
+require either value or pointer receivers. Once you begin to understand that
+all objects are passed by value, it makes understanding and reasoning through
+your code much easier.
+
+Before I close, here are a few more resources that help explain some of these
+core concepts in Go.
+
+An excellent blog post from the creators of Go on the internals of the
+slice: [Go Slices: usage and internals][slices]
+
+A blog post on some of the factors that matter when deciding between pointer or
+value receivers: [Pass by pointer vs pass by value in Go][factors]
+
+A short entry in the Golang FAQ about objects being passed by value: [When are
+function parameters passed by value?][value]
+
+
+[slices]: https://blog.golang.org/go-slices-usage-and-internals
+[factors]: http://goinbigdata.com/golang-pass-by-pointer-vs-pass-by-value/
+[value]: https://golang.org/doc/faq#pass_by_value
