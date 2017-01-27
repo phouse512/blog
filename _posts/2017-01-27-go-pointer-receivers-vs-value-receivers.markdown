@@ -16,7 +16,7 @@ receivers and value receivers. When I was first learning Go, I struggled
 with this concept until it was clearly laid out for me, so that's what
 I'll explain today.
 
-### structs and receivers in go
+### Structs and Receivers in Go
 
 Before we get started, let's define an example struct that we can reference
 throughout this post.
@@ -33,13 +33,13 @@ We have a simple `HttpResponse` struct with a status code, a map for header
 key-value pairs, and the body of the response. Let's move on to looking at
 how value receivers work.
 
-#### value receivers
+#### Value Receivers
 
 Let's define a method that outputs a boolean value, depending on whether or not
 a `HttpResponse` object was successful.
 
 ```
-func (r HttpResponse) validResponse() boolean {
+func (r HttpResponse) validResponse() bool {
     if r.status_code < 300 {
         return true
     }
@@ -56,7 +56,7 @@ fields of a struct but not modify them.
 
 ** barring special types, which we'll discuss further on.
 
-#### pointer receivers
+#### Pointer Receivers
 
 If value receivers don't let you modify the struct itself, its intuitive that
 pointer receivers are the opposite. Pointer receivers allow for you to modify
@@ -72,7 +72,7 @@ Again, this example is very contrived and simple, but it gets the point across.
 Now that we want to update the original struct in question, we need to use
 a pointer receiver that passes in the struct pointer to the method.
 
-### why?
+### Rationale
 
 You might be curious why the language is like this, but it makes sense once you
 understand that everything in Go is passed by value. Every struct you define,
@@ -85,7 +85,7 @@ a lot of sense.
 While all objects are passed by value in Go, there are a few special types that
 *appear* to break this rule.
 
-### special cases
+### Special Cases
 
 There are a few types that appear to break the pointer and value receiver
 conventions I described above. Let's look at the following example of valid
@@ -129,3 +129,63 @@ channel, or map, but the address of its real data structure or object is the
 same. Any usage of these passed-by-value pointers will still modify the
 original object.
 
+### Putting it all together
+
+This has sort of devolved into a conversation about passing objects by value,
+so let's go back to the original topic of pointer and value receivers. Knowing
+what we know now, let's jump back to that original example with our
+`HttpResponse` struct. We now have a few different methods, a mixture of value
+and pointer receivers.
+
+```
+type HttpResponse struct {
+    status_code int
+    headers     map[string]string
+    body        string
+}
+
+func New(status_code int) (*HttpResponse, error) {
+    r := new(HttpResponse)
+
+    r.headers = make(map[string]string)
+    r.status_code = status_code
+    r.body = ""
+    return r, nil
+}
+
+func (r HttpResponse) validResponse() bool {
+    // a value receiver that reads the HttpResponse copy
+    if r.status_code < 300 {
+        return true
+    }
+    return false
+}
+
+func (r HttpResponse) add_header(key string, value string) {
+    // a value receiver that modifies the original map
+    r.headers[key] = value
+}
+
+func (r *HttpResponse) updateStatus(new_status int) {
+    // correct use of a pointer receiver for updating an int field
+    r.status_code = new_status
+}
+
+func (r HttpResponse) updateStatusFail(new_status int) {
+    // this is a bad use of a value receiver, nothing will happen
+    r.status_code = new_status
+}
+
+func main() {
+    response, _ := New(230)
+
+    response.updateStatusFail(300)
+    fmt.Println(response.status_code) // 230, the original response object wasn't updated
+
+    response.updateStatus(300)
+    fmt.Println(response.status_code) // 300, correct use of a pointer receiver
+
+    response.add_header("Content-Type", "text/javascript")
+    fmt.Println(response.headers) // map[Content-Type:text/javascript
+}
+```
