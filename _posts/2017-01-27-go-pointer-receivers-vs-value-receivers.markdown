@@ -60,7 +60,7 @@ fields of a struct but not modify them.
 
 If value receivers don't let you modify the struct itself, its intuitive that
 pointer receivers are the opposite. Pointer receivers allow for you to modify
-the fields of its respective struct. Let's look at an example.
+the fields of their respective structs. Let's look at an example.
 
 ```
 func (r *HttpResponse) updateStatus(new_status int) {
@@ -70,11 +70,11 @@ func (r *HttpResponse) updateStatus(new_status int) {
 
 Again, this example is very contrived and simple, but it gets the point across.
 Now that we want to update the original struct in question, we need to use
-a pointer receiver that passes in a pointer to the method.
+a pointer receiver that passes in the struct pointer to the method.
 
 ### why?
 
-You might be curious why Go is like this, but it makes sense once you
+You might be curious why the language is like this, but it makes sense once you
 understand that everything in Go is passed by value. Every struct you define,
 the basic types, and even things like pointers are all passed by value. In the
 case of pointers, while the pointer itself is passed by value, the address that
@@ -87,4 +87,45 @@ While all objects are passed by value in Go, there are a few special types that
 
 ### special cases
 
-let's talk about slices, maps, and more!!
+There are a few types that appear to break the pointer and value receiver
+conventions I described above. Let's look at the following example of valid
+code.
+
+```
+type Sequence []int
+
+// Methods required by sort.Interface.
+func (s Sequence) Len() int {
+    return len(s)
+}
+func (s Sequence) Less(i, j int) bool {
+    return s[i] < s[j]
+}
+func (s Sequence) Swap(i, j int) {
+    s[i], s[j] = s[j], s[i]
+}
+```
+
+We see that there are three methods here for the type `Sequence`, and they
+all appear to be value receivers. The first two make sense, they are returning
+an int and bool calculated from the value of the `Sequence` attributes. The
+third one is suspicious though - it reassigns the order of elements in the
+slice, seemingly breaking the rules of value receivers.
+
+This brings us to the special types in Go that seem to be passed by reference
+no matter what. There are four types that do this, pointers, channels, maps,
+and slices.
+
+While they appear not to follow the convention that all things are passed by
+value, they actually do. The reason these four types stand out is that the
+data structures in these types hold pointers to a shared object underneath
+the hood. For example, the `channel` type contains a pointer to a channel
+descriptor, the `map` type contains a pointer to a hash table, a slice contains
+pointers to an array, and a pointer points to the object it is defined with.
+
+So even though these types are 'passed by value', a new copy of these types are
+really just copies of addresses in memory. It might be a 'new' pointer,
+channel, or map, but the address of its real data structure or object is the
+same. Any usage of these passed-by-value pointers will still modify the
+original object.
+
