@@ -43,7 +43,6 @@ func (r HttpResponse) validResponse() boolean {
     if r.status_code < 300 {
         return true
     }
-
     return false
 }
 ```
@@ -58,12 +57,33 @@ fields of a struct but not modify them.
 ** barring special types, which we'll discuss further on.
 
 #### pointer receivers
-the example of a pointer receiver
 
+If value receivers don't let you modify the struct itself, its intuitive that
+pointer receivers are the opposite. Pointer receivers allow for you to modify
+the fields of its respective struct. Let's look at an example.
 
-#### putting it together
+```
+func (r *HttpResponse) updateStatus(new_status int) {
+    r.status_code = new_status
+}
+```
 
-here is an example of code with everything in one
+Again, this example is very contrived and simple, but it gets the point across.
+Now that we want to update the original struct in question, we need to use
+a pointer receiver that passes in a pointer to the method.
+
+### why?
+
+You might be curious why Go is like this, but it makes sense once you
+understand that everything in Go is passed by value. Every struct you define,
+the basic types, and even things like pointers are all passed by value. In the
+case of pointers, while the pointer itself is passed by value, the address that
+it points to is still the same, so it allows you to modify the original object.
+Once you wrap your head around that, pointer and value receivers will make
+a lot of sense.
+
+While all objects are passed by value in Go, there are a few special types that
+*appear* to break this rule.
 
 ### special cases
 
