@@ -202,13 +202,11 @@ your code much easier.
 Before I close, here are a few more resources that help explain some of these
 core concepts in Go.
 
-An excellent blog post from the creators of Go on the internals of the
+- an excellent blog post from the creators of Go on the internals of the
 slice: [Go Slices: usage and internals][slices]
-
-A blog post on some of the factors that matter when deciding between pointer or
+- a blog post on some of the factors that matter when deciding between pointer or
 value receivers: [Pass by pointer vs pass by value in Go][factors]
-
-A short entry in the Golang FAQ about objects being passed by value: [When are
+- a short entry in the Golang FAQ about objects being passed by value: [When are
 function parameters passed by value?][value]
 
 
