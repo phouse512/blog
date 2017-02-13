@@ -37,7 +37,7 @@ The following steps are taken from nvm's documentation, so if something doesn't
 work, refer to the docs for help. Let's start by installing it to your machine:
 
 ```
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
 ```
 
 Run `source ~/.bashrc` to make sure that nvm is added to your path, and then
@@ -51,12 +51,19 @@ can use `nvm list`. If you want to install version 4.7 for example, you can run
 4.7`. If you check the Node version by running `which node`, you can see the
 full path, managed by nvm.
 
+```
+$ nvm list  # lists all of the node environments installed
+$ nvm install 4.7  # installs node v4.7 on your machine
+$ nvm use 4.7  # sets v4.7 as the current node path
+$ which node  # show path managed by nvm
+```
+
 We'll also want to install [nginx][nginx] if you don't have it already. It's
 pretty simple, you can do this with the following two commands:
 
 ```
-sudo apt-get update
-sudo apt-get install nginx
+$ sudo apt-get update
+$ sudo apt-get install nginx
 ```
 
 With both of those tools set up, we have everything we need to get our web
@@ -76,7 +83,7 @@ We'll use a tool called [forever][forever] to run your Node app. To install it,
 you simply need to run the following command:
 
 ```
-npm install forever -g
+$ npm install forever -g
 ```
 
 The above command uses npm to install forever globally on your server, which
@@ -92,7 +99,7 @@ To start the server using forever, run the following command from inside your
 project directory:
 
 ```
-forever start <your app/index.js filename>
+$ forever start <your app/index.js filename>
 ```
 
 That will spit out a few lines about the server starting up, and it will look
@@ -103,14 +110,14 @@ something like this:
 Now your server will be running forever, or until it hits an exception that it
 cannot recover from. You can use forever to run multiple Node applications at
 once - to see what's currently running, use `forever list`. Forever comes with
-intuitive commands like `stop` and `restart` which perform as expected.
+intuitive arguments like `stop` and `restart` which perform as expected.
 
 To see the output logs of your Node application, forever also creates a custom
 location by default. When you ran `forever list`, you see that there is
 a column titled logfile which displays the path to the logfile. You can also
 customize this by using some of the forever command flags. This post isn't
-about forever configuration, so I'll leave the rest up to you and the
-[documentation][forever], but this is enough for you to get started.
+about foreverjs, so I'll leave the rest up to you and the
+[documentation][forever].
 
 #### Making Your Server Visible
 
@@ -126,7 +133,7 @@ enough working knowledge to modify these steps accordingly.
 First, let's create a new file that will hold your nginx config:
 
 ```
-vim /etc/nginx/sites-available/node_app
+$ vim /etc/nginx/sites-available/node_app
 ```
 
 Inside that file, we want to put the following contents, slightly modified for
@@ -152,7 +159,7 @@ creating a [symlink][symlink] in another directory to this config file we just
 created. To do that, run the following command:
 
 ```
-sudo ln -s /etc/nginx/sites-available/node_app /etc/nginx/sites-enabled/node_app
+$ sudo ln -s /etc/nginx/sites-available/node_app /etc/nginx/sites-enabled/node_app
 ```
 
 As you can see, the first argument is the path of the file we want to create
@@ -165,7 +172,7 @@ The final step is to make sure that nginx picks up the new configuration. We
 can do that by running this:
 
 ```
-sudo service nginx reload
+$ sudo service nginx reload
 ```
 
 If all goes well, this should give you an `[OK]` message, and nginx has the
@@ -174,7 +181,7 @@ access it on the internet now, by going to `http://your.IP.address/`. If you
 want the request to work from a custom domain name you have, there will be
 a little bit more work reserved for another time.
 
-Your application is up and running, and you should be able to make changes,
+Your application is now up and running, and you should be able to make changes,
 restart your Node server using forever, and see them live on the internet!
 
 
