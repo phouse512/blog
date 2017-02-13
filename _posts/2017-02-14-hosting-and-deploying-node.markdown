@@ -6,14 +6,14 @@ categories: node
 comments: true
 ---
 
-Ever since node came into the world about 7+ years ago, an increasing number
-of web applications are hosted and run in some capacity with node. There are
+Ever since Node came into the world about 7+ years ago, an increasing number
+of web applications are hosted and run in some capacity with it. There are
 dozens of tutorials and examples to help you get an [express][express] server
 running on your local machine. If you want to use webpack to bundle your
 [es6][es6] code, it's equally as easy to find example configuration files to
 get up and running.
 
-Today we're going to look at getting these node web applications up and running
+Today we're going to look at getting these Node web applications up and running
 on a remote Ubuntu server. We'll look at setting up your server to run your
 service, making sure your application stays up and running, and making it
 really easy to deploy new changes.
@@ -27,10 +27,10 @@ assuming you are running an Ubuntu 14.04 server. While most of these commands
 should be transferrable, they may not and you might have to make some simple
 modifications.
 
-One of the key aspects to standardizing your node environment is to use a tool
-called [nvm][nvm]. nvm allows for users to easily manage node versions and
+One of the key aspects to standardizing your Node environment is to use a tool
+called [nvm][nvm]. nvm allows for users to easily manage Node versions and
 switch between them. Using nvm allows you to explicitly choose what version of
-node you want to run. You don't have to worry about PATH issues or wondering if
+Node you want to run. You don't have to worry about PATH issues or wondering if
 your bashrc or bash_profile ran correctly.
 
 The following steps are taken from nvm's documentation, so if something doesn't
@@ -45,10 +45,10 @@ run `command -v nvm` to ensure that it was installed correctly. If it was, it
 will output `nvm` to your terminal.
 
 Now you can install whatever version you'd like, and switch between them
-seamlessly. For example, to see what versions of node you currently have, you
+seamlessly. For example, to see what versions of Node you currently have, you
 can use `nvm list`. If you want to install version 4.7 for example, you can run
 `nvm install 4.7`, and then set it as the current version by running `nvm use
-4.7`. If you check the node version by running `which node`, you can see the
+4.7`. If you check the Node version by running `which node`, you can see the
 full path, managed by nvm.
 
 We'll also want to install [nginx][nginx] if you don't have it already. It's
@@ -64,7 +64,7 @@ applications up and running. Next, let's look at getting your server to run and
 served to the internet!
 
 
-#### Running your Web Application
+### Running your Web Application
 
 There are 2 important aspects to getting your server up and running: 1) we need
 to make sure that the Node server is running 24/7, and 2) the outside world
@@ -101,7 +101,7 @@ something like this:
 ![forever output]({{ site.url }}/assets/forever_output.png)
 
 Now your server will be running forever, or until it hits an exception that it
-cannot recover from. You can use forever to run multiple node applications at
+cannot recover from. You can use forever to run multiple Node applications at
 once - to see what's currently running, use `forever list`. Forever comes with
 intuitive commands like `stop` and `restart` which perform as expected.
 
@@ -116,7 +116,7 @@ about forever configuration, so I'll leave the rest up to you and the
 
 Now your server is running locally on whatever port you setup, but it isn't
 accessible on the default port 80 used for web requests. What we'll do is use
-nginx to route incoming requests on port 80 to your node app.
+nginx to route incoming requests on port 80 to your Node app.
 
 This post will also not go into some of the intricacies of running and using
 nginx, but we'll go through a basic configuration. We'll also assume that you
@@ -135,7 +135,6 @@ your domain name and port number.
 ```
 server {
     listen 80;
-    server_name <yourdomain.com>;
 
     location / {
         proxy_pass http://localhost:<your_port_#>/;
@@ -144,9 +143,9 @@ server {
 ```
 
 The above configuration is pretty self-explanatory. First, it tells nginx to
-listen for incoming http requests on port 80. If the request has yourdomain.com
-in the body, then it forwards this request to `http://localhost:<your_port_#>/`
-on your server, which corresponds to the node application you spun up earlier.
+listen for incoming http requests on port 80. It then takes all of those
+requests and forwards them to your Node application running on your specified
+port number.
 
 Next, we have to actually add this configuration to nginx - and we do that by
 creating a [symlink][symlink] in another directory to this config file we just
@@ -170,13 +169,13 @@ sudo service nginx reload
 ```
 
 If all goes well, this should give you an `[OK]` message, and nginx has the
-correct config! If your node application is running, you should be able to
-access it on the internet now, by going to `http://yourdomain.com`. Note that
-this is contingent on you updating your DNS settings to map that domain name to
-your server IP.
+correct config! If your Node application is running, you should be able to
+access it on the internet now, by going to `http://your.IP.address/`. If you
+want the request to work from a custom domain name you have, there will be
+a little bit more work reserved for another time.
 
 Your application is up and running, and you should be able to make changes,
-restart your node server using forever, and see them live on the internet!
+restart your Node server using forever, and see them live on the internet!
 
 
 [express]: http://expressjs.com/
