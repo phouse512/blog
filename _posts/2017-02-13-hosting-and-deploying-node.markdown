@@ -13,9 +13,9 @@ running on your local machine. Other frameworks like [meteor][meteor] can also
 get real-time server-client interactions right out of the box.
 
 Today we're going to look at getting these Node web applications up and running
-on a remote Ubuntu server. We'll look at setting up your server to run your
-service, making sure your application stays up and running, and making it
-really easy to deploy new changes.
+on a remote Ubuntu server. We'll set up your server to run your webapp, make
+sure that your application stays up and running, and make it really easy to
+deploy new changes.
 
 
 ### Server Setup
@@ -23,14 +23,14 @@ really easy to deploy new changes.
 First, it's important to make sure that your server is ready to host your
 application and present it to the world. Throughout this post, I will be
 assuming you are running an Ubuntu 14.04 server. While most of these commands
-should be transferrable, they may not and you might have to make some simple
-modifications.
+should be transferrable for other systems, they may not and you might have to
+make some simple modifications.
 
 One of the key aspects to standardizing your Node environment is to use a tool
 called [nvm][nvm]. nvm allows for users to easily manage Node versions and
 switch between them. Using nvm allows you to explicitly choose what version of
-Node you want to run. You don't have to worry about PATH issues or wondering if
-your bashrc or bash_profile ran correctly.
+Node you want to run. You don't have to worry about `PATH` issues or wonder if
+your `.bashrc` or `.bash_profile` scripts ran correctly.
 
 The following steps are taken from nvm's documentation, so if something doesn't
 work, refer to the docs for help. Let's start by installing it to your machine:
@@ -66,15 +66,14 @@ $ sudo apt-get install nginx
 ```
 
 With both of those tools set up, we have everything we need to get our web
-applications up and running. Next, let's look at getting your server to run and
-served to the internet!
+applications up and running. Next, let's look at getting your server to run!
 
 
 ### Running your Web Application
 
-There are 2 important aspects to getting your server up and running: 1) we need
+There are 2 important aspects to hosting a web application. 1) We need
 to make sure that the Node server is running 24/7, and 2) the outside world
-needs to be able to access your Node server running on the machine.
+needs to be able to access your server running on the machine.
 
 #### Using Forever to Run Your Server
 
@@ -87,10 +86,10 @@ $ npm install forever -g
 
 The above command uses npm to install forever globally on your server, which
 adds it to your path. As a note, you will most likely need to run this with
-sudo privileges to install forever correctly.
+sudo privileges to install it correctly.
 
 Before starting the server, first make sure that nvm is set to the correct
-version of Node, by using the `nvm use <version` command we talked about
+version of Node, by using the `nvm use <version>` command we talked about
 earlier. Navigate to your project directory, and then run `npm install` to make
 sure that all of your dependencies are ready to go.
 
@@ -136,7 +135,7 @@ $ vim /etc/nginx/sites-available/node_app
 ```
 
 Inside that file, we want to put the following contents, slightly modified for
-your domain name and port number.
+your port number.
 
 ```
 server {
