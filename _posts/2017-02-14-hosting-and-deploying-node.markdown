@@ -9,9 +9,8 @@ comments: true
 Ever since Node came into the world about 7+ years ago, an increasing number
 of web applications are hosted and run in some capacity with it. There are
 dozens of tutorials and examples to help you get an [express][express] server
-running on your local machine. If you want to use webpack to bundle your
-[es6][es6] code, it's equally as easy to find example configuration files to
-get up and running.
+running on your local machine. Other frameworks like [meteor][meteor] can also
+get real-time server-client interactions right out of the box.
 
 Today we're going to look at getting these Node web applications up and running
 on a remote Ubuntu server. We'll look at setting up your server to run your
@@ -190,4 +189,4 @@ restart your Node server using forever, and see them live on the internet!
 [nginx]: https://www.nginx.com/resources/wiki/
 [forever]: https://github.com/foreverjs/forever 
 [symlink]: https://en.wikipedia.org/wiki/Symbolic_link#POSIX_and_Unix-like_operating_systems
-[es6]: http://es6-features.org/
+[meteor]: https://www.meteor.com/
