@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Hosting and Deploying Node Services"
-date: 2017-02-07 16:20:00 -0600
+date: 2017-02-13 16:20:00 -0600
 categories: node
 comments: true
 ---
