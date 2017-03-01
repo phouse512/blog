@@ -51,7 +51,7 @@ and open, and ultimately locked the table from outside queries and manipulations
 Once I did some digging in the [psycopg2 documentation][psycopg2_docs], I found
 that my usage was wrong. Quoted from the documentation below:
 
-> Warning By default even a simple SELECT will start a transaction: in
+> By default even a simple SELECT will start a transaction: in
 > long-running programs, if no further action is taken, the session will remain
 > “idle in transaction”, an undesirable condition for several reasons (locks are
 > held by the session, tables bloat...). For long lived scripts, either make sure
