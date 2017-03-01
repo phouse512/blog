@@ -21,6 +21,8 @@ db=> select * from pg_locks where relation=(select oid from pg_class where
 relname='<table_name>');
 ```
 
+![postgres-output]({{ site.url }}/assets/psql.png)
+
 When run against my Postgres instance, saw something like the following showed
 up. While I'm not 100% sure about all the details here (`AccessShareLock`, for
 example), it was enough to make me start looking into my code to see what was 
@@ -49,11 +51,11 @@ and open, and ultimately locked the table from outside queries and manipulations
 Once I did some digging in the [psycopg2 documentation][psycopg2_docs], I found
 that my usage was wrong. Quoted from the documentation below:
 
->>> Warning By default even a simple SELECT will start a transaction: in
->>> long-running programs, if no further action is taken, the session will remain
->>> “idle in transaction”, an undesirable condition for several reasons (locks are
->>> held by the session, tables bloat...). For long lived scripts, either make sure
->>> to terminate a transaction as soon as possible or use an autocommit connection.
+> Warning By default even a simple SELECT will start a transaction: in
+> long-running programs, if no further action is taken, the session will remain
+> “idle in transaction”, an undesirable condition for several reasons (locks are
+> held by the session, tables bloat...). For long lived scripts, either make sure
+> to terminate a transaction as soon as possible or use an autocommit connection.
 
 To remedy the mistake, I simply called `connection.commit()` at the end of each
 function call. After redeploying, the long-term locks were removed and there
