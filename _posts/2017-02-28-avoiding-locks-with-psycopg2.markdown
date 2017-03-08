@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Avoiding Locks when using psycopg2"
-date: 2017-02-13 16:20:00 -0600
+date: 2017-02-28 16:20:00 -0600
 categories: python postgres
 comments: true
 ---
