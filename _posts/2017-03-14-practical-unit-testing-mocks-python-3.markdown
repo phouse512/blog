@@ -8,12 +8,12 @@ comments: true
 
 Over the course of writing production Python the past year, I've learned a bit
 about writing effective unit-tests as well. Here is a collection of some of the
-common use-cases I've come across while unit-testing in Python.
+common use-cases I've come across while writing tests in Python.
 
 Mocking
-    mocking methods of a class
-    mocking out imported libraries
-    mocking objects
+/- mocking methods of a class
+/- mocking out imported libraries
+/- mocking objects
 
 Mock Behavior
     returning multiple values
