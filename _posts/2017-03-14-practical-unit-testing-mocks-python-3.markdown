@@ -11,12 +11,12 @@ about writing effective unit-tests as well. Here is a collection of some of the
 common use-cases I've come across while writing tests in Python.
 
 Mocking
-/- mocking methods of a class
-/- mocking out imported libraries
-/- mocking objects
+: mocking methods of a class
+: mocking out imported libraries
+: mocking objects
 
 Mock Behavior
-    returning multiple values
-    asserting multiple method calls
-    asserting exceptions thrown
+: returning multiple values
+: asserting multiple method calls
+: asserting exceptions thrown
 
