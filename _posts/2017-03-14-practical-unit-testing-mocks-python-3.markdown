@@ -6,9 +6,14 @@ categories: python
 comments: true
 ---
 
-Over the course of writing production Python the past year, I've learned a bit
-about writing effective unit-tests as well. Here is a collection of some of the
+Over the course of writing Python in the past year, I've learned a bit
+about writing effective unit-tests. Here is a collection of some of the
 common use-cases I've come across while writing tests in Python.
+
+Unit Testing
+: unit test basics
+: unittest.TestCase
+: what do you test?
 
 Mocking
 : mocking methods of a class
@@ -20,3 +25,6 @@ Mock Behavior
 : asserting multiple method calls
 : asserting exceptions thrown
 
+
+
+#### What Do You Test? {#what_test}
