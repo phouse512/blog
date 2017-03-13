@@ -10,21 +10,36 @@ Over the course of writing Python in the past year, I've learned a bit
 about writing effective unit-tests. Here is a collection of some of the
 common use-cases I've come across while writing tests in Python.
 
-Unit Testing
-: unit test basics
-: unittest.TestCase
-: what do you test?
+[Unit Testing](#unit_test)
+
+> [unit test basics](#test_basics)<br />
+> [unittest.TestCase](#test_case)<br />
+> [ what do you test?](#what_test)<br />
 
 Mocking
-: mocking methods of a class
-: mocking out imported libraries
-: mocking objects
+
+> mocking methods of a class<br />
+> mocking out imported libraries<br />
+> mocking objects<br />
 
 Mock Behavior
-: returning multiple values
-: asserting multiple method calls
-: asserting exceptions thrown
 
+> returning multiple values<br />
+> asserting multiple method calls<br />
+> asserting exceptions thrown<br />
 
+### Unit Testing {#unit_test}
+
+Why should you write tests, why are they important?
+
+#### Unit Test Basics {#test_basics}
+
+What is a unit test?
+
+#### unittest.TestCase {#test_case}
+
+Using unittest.TestCase to run your tests
 
 #### What Do You Test? {#what_test}
+
+What to test? hmm
