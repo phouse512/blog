@@ -16,13 +16,13 @@ common use-cases I've come across while writing tests in Python.
 > [unittest.TestCase](#test_case)<br />
 > [what do you test?](#what_test)<br />
 
-Mocking
+[Mocking](#mocking)
 
-> mocking methods of a class<br />
+> [mocking methods of a class](#mocking_methods)<br />
 > mocking out imported libraries<br />
 > mocking objects<br />
 
-Mock Behavior
+[Mock Behavior](#mock_behavior)
 
 > returning multiple values<br />
 > asserting multiple method calls<br />
@@ -89,7 +89,43 @@ others that can help make writing tests easier.
 When writing unit tests, it can be easy to go a little overboard and start
 testing every function in your code. While you can do this, all it ultimately
 does is make testing very brittle. During refactoring, your unit tests
-constantly require changing to keep them up-to-date and the value can begin to
-get lost. Write unit-tests that test the API's and interfaces between code and
+constantly require changing to keep them up-to-date and the value can get lost.
+Write unit-tests that test the API's and interfaces between code and
 that verify crucial business logic. You don't need to write tests to verify
 that you are using the `range` method properly, for example.
+
+
+### Mocking {#mocking}
+
+Larger codebases have lots of moving parts and complex behaviors that need to
+be tested, but not necessarily all at once. I could try to explain this in
+words, but looking at a practical example may be easier.
+
+```
+def send_notifications(self, message: str):
+    
+    total_notifications = 0
+    for user in all_users:
+        if not user.is_valid():
+            continue
+
+        self.notifier.send_message(user, message)
+        self.db.track_notification(user, message)
+        total_notifications += 1
+
+    return total_notifications
+```
+
+In the above example, let's say we want to test that the logic around
+validating users and notification counting works as expected. We don't really
+want to test the `send_message` method of `notifier`, we want to test that
+independently elsewhere. This is where mocks come in handy. They allow you to
+test that certain chunks of code are called/referenced without actually calling
+that piece of code.
+
+In our unit test for the above method, all we care about is that `send_message`
+got called a certain number of times. Whatever that method does is out of this
+current tests' scope. Let's look at a few common mocking scenarios that I've
+run into consistently.
+
+#### Mocking Methods of a Class {#mocking_methods}
