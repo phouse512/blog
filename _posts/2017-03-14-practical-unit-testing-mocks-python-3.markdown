@@ -19,7 +19,7 @@ common use-cases I've come across while writing tests in Python.
 [Mocking](#mocking)
 
 > [mocking methods of a class](#mocking_methods)<br />
-> mocking out imported libraries<br />
+> [mocking out imported libraries](#mock_imports)<br />
 > mocking objects<br />
 
 [Mock Behavior](#mock_behavior)
@@ -125,7 +125,78 @@ that piece of code.
 
 In our unit test for the above method, all we care about is that `send_message`
 got called a certain number of times. Whatever that method does is out of this
-current tests' scope. Let's look at a few common mocking scenarios that I've
-run into consistently.
+current tests' scope. The following line also makes an external call to
+a database. Mocking also allows for you take advantage of design patterns
+such as dependency injection so that you can test modularly too. Let's look at 
+a few common mocking scenarios that I've run into consistently.
 
 #### Mocking Methods of a Class {#mocking_methods}
+
+While testing methods of a class, you might come across times where you want to
+mock out the other methods of a class. We can use the `patch` method to mock
+portions of a class without messing with others so you can still use them.
+Here's some example code:
+
+```
+class HeartBeater(object):
+
+    def __init__(self, service_name: str, event_name: str, db_cursor)
+        self.service_name = service_name
+        self.event_name = event_name
+        self.active = True
+
+    def update_timeout_flag(self, new_flag: bool):
+        # some logic here that makes a database query
+
+    def check_status(self, current_time: int):
+        time_difference = current_time - self.last_received
+        is_timed_out = time_difference > self.timeout
+
+        if not self.timed_out and is_timed_out:
+            self.update_timeout_flag(True)
+
+            return (False, "some error message",)
+
+        elif self.timed_out and is_timed_out:
+            return (False, "still timed out",)
+        else:
+            return (True, "some happy path",)
+```
+
+While the class above might not be the most sensible, let's say we want to test
+the `check_status` method. Particularly we want to see that we hit the first
+conditional block where `update_timeout_flag` is called. Here is how to use
+`patch` to turn that call into a mock that effectively does nothing.
+
+```
+import unittest
+
+from mock import patch
+from heartbeater import HeartBeater
+
+class HeartBeaterTest(unittest.TestCase):
+    
+    def setUp(self):
+        # the if portion of our test
+        self.hb = HeartBeater('service_test', 'test_event', db_cursor)
+
+    @patch.object(HeartBeater, 'update_timeout_flag')
+    def check_status(self, update_timeout_mock):
+        # the when portion of our test
+        result = self.hb.check_status(141444444)
+        
+        # the then portion of our test
+        self.assertFalse(result[0])
+        update_timeout_mock.assert_called_once_with(True)
+```
+
+As you can see, the `patch.object` decorator adds the update_timeout_mock
+variable to our unit test. This is the mock object that now represents the
+`update_timeout_flag` method of the class. Whenever we call that method
+directly or indirectly, the mock will record how it was used so that you can
+make assertions later.
+
+
+#### Mocking Imported Libraries {#mock_imports}
+
+
