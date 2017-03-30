@@ -245,8 +245,8 @@ written with a debug message.
 
 The final key point to note here is the path of the patch string for `sys`.
 You'll notice that the patch is not on `@patch("sys.exit")`, this is
-intentional. Because you want to mock the import in that module, you must
-specify the path of the module import and making the call,
+intentional. Because you want to mock the import call _from_ that module, you must
+specify the path of the module importing and making the call,
 `archiver.archive.sys.exit`. If you don't do this, your code won't fail,
 but the usage of `sys` in your code won't get mocked as expected.
 
