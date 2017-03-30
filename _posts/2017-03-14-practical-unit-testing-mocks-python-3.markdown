@@ -20,7 +20,7 @@ common use-cases I've come across while writing tests in Python.
 
 > [mocking methods of a class](#mocking_methods)<br />
 > [mocking out imported libraries](#mock_imports)<br />
-> mocking objects<br />
+> [mocking objects](#mock_objects)<br />
 
 [Mock Behavior](#mock_behavior)
 
@@ -123,7 +123,7 @@ independently elsewhere. This is where mocks come in handy. They allow you to
 test that certain chunks of code are called/referenced without actually calling
 that piece of code.
 
-In our unit test for the above method, all we care about is that `send_message`
+In our unit test for the method, all we care about is that `send_message`
 got called a certain number of times. Whatever that method does is out of this
 current tests' scope. The following line also makes an external call to
 a database. Mocking also allows for you take advantage of design patterns
@@ -163,7 +163,7 @@ class HeartBeater(object):
             return (True, "some happy path",)
 ```
 
-While the class above might not be the most sensible, let's say we want to test
+While the class might not be the most sensible, let's say we want to test
 the `check_status` method. Particularly we want to see that we hit the first
 conditional block where `update_timeout_flag` is called. Here is how to use
 `patch` to turn that call into a mock that effectively does nothing.
@@ -199,4 +199,58 @@ make assertions later.
 
 #### Mocking Imported Libraries {#mock_imports}
 
+The next case I occasionally run into deals with mocking out imported
+libraries. The case I'll go over here involves mocking methods of the `sys`
+package. 
 
+```
+# filename: archiver/archive.py
+
+def archive(day, datasource):
+    
+    # some logic here..
+
+    sys.stdout.write("some debug message here")
+
+    if not_valid:
+        sys.exit()
+```
+
+If we want to mock out both of these calls, we can use the `patch` decorator to
+accomplish what we want. A simple test case for this code would look something
+like this:
+
+```
+# filename: tests/test_archive.py
+
+# TestCase boilerplate here..
+
+@patch("archiver.archive.sys.exit")
+@patch("archiver.archive.sys.stdout")
+def test_archiver(self, stdout_mock, exit_mock):
+
+    result = archive('03-21-2017', 23)
+
+    stdout_mock.write.assert_called_once_with("some debug message here")
+    exit_mock.assert_not_called()
+```
+
+In the unit test, you see that we create 2 distinct patches for both of the
+calls we want to mock. First we mock out the `exit` method as well as the
+`stdout` module of `sys`. The unit test being patched must have both in the
+argument list so we can work with the mocks we've created. Mocks come in with
+some handle calls that help us to verify that the mocks are being used
+correctly: `sys.exit()` shouldn't be called and `stdout.write` should be
+written with a debug message.
+
+The final key point to note here is the path of the patch string for `sys`.
+You'll notice that the patch is not on `@patch("sys.exit")`, this is
+intentional. Because you want to mock the import in that module, you must
+specify the path of the module import and making the call,
+`archiver.archive.sys.exit`. If you don't do this, your code won't fail,
+but the usage of `sys` in your code won't get mocked as expected.
+
+This happens for all sorts of imports and its very important, especially when
+using libraries like `boto3` that run configuration code on import.
+
+#### Mocking Objects {#mock_objects}
