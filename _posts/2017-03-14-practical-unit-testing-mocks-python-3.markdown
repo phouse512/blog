@@ -26,7 +26,9 @@ common use-cases I've come across while writing tests in Python.
 
 > [returning multiple values](#mock_multiple_return)<br />
 > [asserting multiple method calls](#mock_multiple_call)<br />
-> asserting exceptions thrown<br />
+> [mock exceptions](#mock_exception)<br />
+
+[Conclusion](#conclusion)
 
 ### Unit Testing {#unit_test}
 
@@ -350,8 +352,8 @@ As you can see, the hierarchy underneath the mock objects can also be tested.
 #### Asserting Multiple Calls {#mock_multiple_call}
 
 The `mock` library comes with a standard method
-[assert_called_once_with](assert_once) that makes it easy to make sure that
-a mock is called once with parameters of your choice. There is also a slightly
+[assert_called_once_with](assert_once) that makes it easy to ensure sure that
+a mock is called once with parameters of your choice. There is also a
 lesser known but even more useful method `assert_has_calls` that tests exactly
 what it implies. The [documentation][assert_has_calls] is pretty useful so
 I won't go into too much detail, but here is some example usage.
@@ -373,5 +375,51 @@ mock_object.assert_has_calls(expected_calls, any_order=False)
 When `any_order` is `True`, the assertion does not care about the order in
 which these calls are made, only that they all exist and were run.
 
+#### Mocking Exceptions {#mock_exception}
+
+The final pattern I run into deals with handling exceptions in your code.
+I often want to test throwing an exception from a mocked object to see how the
+surrounding code is able to handle it.
+
+The `side_effect` attribute again comes in handy here. If you would like for
+a method to throw an exception when called, you set `side_effect` to be equal
+to the exception that you'd like.
+
+```
+heartbeater.check_status() # we want this to throw an exception
+
+mock_heartbeater.check_status.side_effect = Exception('boom')
+```
+
+Whenever `check_status` is called on this mock instance, the exception
+specified will get thrown.
+
+On the other side of things, the `unittest` library also makes it very easy to
+assert that exceptions are thrown. [assertRaises][asser_raises] makes it simple
+and encapsulates the code that is throwing the exception.
+
+```
+class TestSomething(unittest.TestCase):
+
+    def test_behavior(self):
+        with self.assertRaises(CustomException) as cm:
+            method_to_test()
+
+        self.assertEqual(cm.exception.error_code, 3)
+```
+
+You even can store the exception if you'd like to test attributes of the
+exception on top of verifying that it was raised.
+
+
+### Conclusion {#conclusion}
+
+If you are new to unit-testing with Python, hopefully you have some ideas of
+how you can get started. The `unittest` and `mock` libraries built in to
+Python3 are very powerful and allow for you to test many different kinds of
+behavior. Happy testing!
+
+
 [assert_once]: https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock.assert_called_once_with
 [assert_has_calls]: https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock.assert_has_calls
+[assert_raises]: https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertRaises
