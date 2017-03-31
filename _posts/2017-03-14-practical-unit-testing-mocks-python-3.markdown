@@ -127,7 +127,7 @@ that piece of code.
 
 In our unit test for the method, all we care about is that `send_message`
 got called a certain number of times. Whatever that method does is out of this
-current tests' scope. The following line also makes an external call to
+current test's scope. The following line also makes an external call to
 a database. Mocking also allows for you take advantage of design patterns
 such as dependency injection so that you can test modularly too. Let's look at 
 a few common mocking scenarios that I've run into consistently.
@@ -352,7 +352,7 @@ As you can see, the hierarchy underneath the mock objects can also be tested.
 #### Asserting Multiple Calls {#mock_multiple_call}
 
 The `mock` library comes with a standard method
-[assert_called_once_with](assert_once) that makes it easy to ensure sure that
+[assert_called_once_with][assert_once] that makes it easy to ensure sure that
 a mock is called once with parameters of your choice. There is also a
 lesser known but even more useful method `assert_has_calls` that tests exactly
 what it implies. The [documentation][assert_has_calls] is pretty useful so
@@ -395,7 +395,7 @@ Whenever `check_status` is called on this mock instance, the exception
 specified will get thrown.
 
 On the other side of things, the `unittest` library also makes it very easy to
-assert that exceptions are thrown. [assertRaises][asser_raises] makes it simple
+assert that exceptions are thrown. [assertRaises][assert_raises] makes it simple
 and encapsulates the code that is throwing the exception.
 
 ```
@@ -417,7 +417,11 @@ exception on top of verifying that it was raised.
 If you are new to unit-testing with Python, hopefully you have some ideas of
 how you can get started. The `unittest` and `mock` libraries built in to
 Python3 are very powerful and allow for you to test many different kinds of
-behavior. Happy testing!
+behavior. 
+
+Along the way you are likely to run into some creative scenarios and usages of
+these libraries, but the basics here will cover many of the common issues and questions
+you might have. Happy testing!
 
 
 [assert_once]: https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock.assert_called_once_with
