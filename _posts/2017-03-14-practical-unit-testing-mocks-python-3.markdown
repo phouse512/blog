@@ -25,7 +25,7 @@ common use-cases I've come across while writing tests in Python.
 [Mock Behavior](#mock_behavior)
 
 > [returning multiple values](#mock_multiple_return)<br />
-> asserting multiple method calls<br />
+> [asserting multiple method calls](#mock_multiple_call)<br />
 > asserting exceptions thrown<br />
 
 ### Unit Testing {#unit_test}
@@ -308,7 +308,7 @@ you might run into: 1) mocks should return multiple values on subsequent calls,
 2) asserting a mock was called multiple times, and 3) mocking/asserting an
 exception was made.
 
-#### Returning Multiple Values {#mock_multiple_returns}
+#### Returning Multiple Values {#mock_multiple_return}
 
 In your code, you might have a single mock object called multiple times. Each
 time it is called, it could be expected to return different values.
@@ -345,6 +345,33 @@ mock_heartbeater.check_status.side_effect = [ True, False, True]
 mock_heartbeater.get_latest_hb.side_effect = [ HeartBeater(1), HeartBeater(2) ]
 ```
 
-As you can see, the hierarchy underneath the mock objects can also be tested as
-well.
+As you can see, the hierarchy underneath the mock objects can also be tested.
 
+#### Asserting Multiple Calls {#mock_multiple_call}
+
+The `mock` library comes with a standard method
+[assert_called_once_with](assert_once) that makes it easy to make sure that
+a mock is called once with parameters of your choice. There is also a slightly
+lesser known but even more useful method `assert_has_calls` that tests exactly
+what it implies. The [documentation][assert_has_calls] is pretty useful so
+I won't go into too much detail, but here is some example usage.
+
+```
+from unittest.mock import call, MagicMock
+
+mock_object = MagicMock()
+
+expected_calls = [
+    call(datetime.now()),
+    call(datetime.now()),
+    call(None)
+]
+
+mock_object.assert_has_calls(expected_calls, any_order=False)
+```
+
+When `any_order` is `True`, the assertion does not care about the order in
+which these calls are made, only that they all exist and were run.
+
+[assert_once]: https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock.assert_called_once_with
+[assert_has_calls]: https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock.assert_has_calls
