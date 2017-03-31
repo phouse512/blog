@@ -254,3 +254,49 @@ This happens for all sorts of imports and its very important, especially when
 using libraries like `boto3` that run configuration code on import.
 
 #### Mocking Objects {#mock_objects}
+
+When using database cursors and other configurable objects, I often use
+dependency injection patterns to make my code easier to test. I end up with
+methods and classes that require a database cursor.
+
+```
+class HeartBeater(object):
+
+    def __init__(self, db_cursor, metric_registry):
+        
+        self.db_cursor = db_cursor
+        self.metric_registry = metric_registry
+
+    def get_last_hb(self):
+        
+        query = "select * from heartbeater order by last_updated desc limit 1"
+        self.db_cursor.execute(query)
+
+        result = self.db_cursor.fetchone()
+        return result
+```
+
+To test that code, we can create instances of `MagicMock` objects to inject
+upon creation of the `HeartBeater` object. Let's look at an example.
+
+```
+class HeartBeaterTest(object):
+
+    def setUp(self):
+        self.mock_cursor = MagicMock()
+        self.mock_metrics = MagicMock()
+        self.test_hb = HeartBeater(self.mock_cursor, self.mock_metrics)
+
+    def test_get_last_hb(self):
+        
+        actual_result = self.test_hb.get_last_hb()
+
+        self.mock_cursor.assert_called_with("query string here")
+```
+
+By mocking the objects that we inject into the class instance, all of our
+subsequent use of that class and its methods can be easily tested. Notice the
+use of the `setUp` method also saves us time and allows for us to use the same
+mock objects throughout our test suite.
+
+
