@@ -24,7 +24,7 @@ common use-cases I've come across while writing tests in Python.
 
 [Mock Behavior](#mock_behavior)
 
-> returning multiple values<br />
+> [returning multiple values](#mock_multiple_return)<br />
 > asserting multiple method calls<br />
 > asserting exceptions thrown<br />
 
@@ -299,4 +299,52 @@ subsequent use of that class and its methods can be easily tested. Notice the
 use of the `setUp` method also saves us time and allows for us to use the same
 mock objects throughout our test suite.
 
+
+### Mock Behavior {#mock_behavior}
+
+Now that we've learned how to properly mock objects, it's time to learn how to
+return expected values and make assertions. Let's look at 3 different scenarios
+you might run into: 1) mocks should return multiple values on subsequent calls,
+2) asserting a mock was called multiple times, and 3) mocking/asserting an
+exception was made.
+
+#### Returning Multiple Values {#mock_multiple_returns}
+
+In your code, you might have a single mock object called multiple times. Each
+time it is called, it could be expected to return different values.
+Fortunately, `MagicMock` allows us to handle this by taking advantage of the
+`side_effect` method.
+
+Let's say we have a method that is supposed to return an integer, and the code
+we are testing calls it 3 times. You can use the `side_effect` property as
+follows to return different values on successive calls.
+
+```
+mock_object = MagicMock()
+
+mock_object.method_to_mock.side_effect = [
+    5,
+    4,
+    10
+]
+```
+
+You can use this method to mock whatever you'd like to return, from arrays to
+more complicated objects. One more thing to note is that `MagicMock` allows for
+you to mock any chained attributes or methods from it. Let's say that I have
+a line of code that looks like this:
+
+```
+heartbeater.check_status(current_time)
+heartbeater.get_lastest_hb()
+
+# if the heartbeater object is mocked, that means all subsequent calls on it
+# are mocked as well
+
+mock_heartbeater.check_status.side_effect = [ True, False, True]
+mock_heartbeater.get_latest_hb.side_effect = [ HeartBeater(1), HeartBeater(2) ]
+```
+
+As you can see, the hierarchy underneath the mock objects can also be tested as
+well.
 
