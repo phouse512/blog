@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Practical Unit Testing with Mocks in Python3"
-date: 2017-03-14 12:40:00 -0600
+date: 2017-03-31 14:40:00 -0600
 categories: python
 comments: true
 ---
