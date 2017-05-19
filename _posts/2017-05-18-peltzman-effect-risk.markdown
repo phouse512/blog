@@ -56,3 +56,4 @@ perceived and actual risk (hopefully) narrows.
 [killed]: https://www.theguardian.com/technology/2016/jun/30/tesla-autopilot-death-self-driving-car-elon-musk
 [leather]: https://en.wikipedia.org/wiki/Football_helmet#Early_years
 [compensation]: https://en.wikipedia.org/wiki/Risk_compensation
+[rules]: http://www.nfl.com/news/story/0ap1000000238662/article/new-nfl-rules-crownofhelmet-change-to-help-runner-defender
