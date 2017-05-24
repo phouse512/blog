@@ -48,7 +48,7 @@ currently working on a cloud-storage portal that leaves the encryption keys in
 your hands only. If that sounds interesting, let me know!
 
 [minidv]: https://en.wikipedia.org/wiki/DV#Magnetic_tape
-[life]: https://www.clir.org/pubs/reports/pub54/4life_expectancy.html
+[life]: https://web.archive.org/web/20160604020045/https://www.clir.org/pubs/reports/pub54/4life_expectancy.html
 [data]: https://en.wikipedia.org/wiki/Data_degradation
 [quora]: https://www.quora.com/Has-anyone-actually-ever-lost-data-using-Amazon-S3-reduced-redundancy-option
 [lavabit]: https://en.wikipedia.org/wiki/Lavabit#Connection_to_Edward_Snowden
