@@ -46,23 +46,21 @@ One of the key components to keeping the Python code stateless is to hand all
 the inputs that the script requires on-call. Our Python code has no knowledge
 of databases, other services or complicated configuration. One of the most
 important pieces it needs is the actual signal that we want to classify. In our
-use case, our signal is a few hundred datapoints long, too much to pass as
+use case, the signal is a few hundred datapoints long, too much to pass as
 a command line argument.
 
 We set up our job processor to produce a temporary JSON file in our `/tmp/`
 directory. The full path of that temporary file is then used as an argument to
-the Python script where it is read in, before getting cleaned up by the job
+the Python script where the data is loaded before getting cleaned up by the job
 processor at the end. The nice thing here is that any other configuration
 variables or attributes can get passed via this same route, especially
 complicated ones.
-
-Later when we look at the 
 
 #### Error Handling and Logging
 
 Now that we can't catch exceptions normally, we had to come up with a simple
 protocol so that our Python code could communicate to the job worker that there
-was an error. We ended up coming with a utility function as shown below. It's
+was an error. We ended up coming with utility functions similar to the one below. It's
 very simple code, but it prefixes any message with a constant. We also use the
 same concept for sending debug logs to golang.
 
@@ -105,7 +103,8 @@ Another note is that the error handling on the Go worker must correctly log and
 handle these errors. All of my `Worker` interfaces have a `Cleanup()` method
 that handles any leftovers after spawning this Python job. Any leftover files,
 open connections, etc. must be cleaned up regardless of success or failure.
-Additionally the worker must then be returned back to the pool for more work.
+Additionally the worker must then be returned back to the pool for future
+processing.
 
 
 ### Golang Job Processor
@@ -114,7 +113,7 @@ Next, let's look at how our Go service delegates its workers to run multiple
 jobs at once. A naive approach might be to use a goroutine and spawn a new
 goroutine for each incoming request. The problem with that approach is that
 some of the Python computing tasks are pretty CPU intensive, and spawning an
-unbounded number of these will bring these grinding to a halt pretty fast. We
+unbounded number of these will bring our server grinding to a halt pretty fast. We
 went with a fixed size worker pool that makes heavy use of Go channels.
 
 As tasks come in via HTTP requests, they get put on the job queue where they
@@ -189,6 +188,15 @@ check out how you can use channels for async communication across golang. The
 one final note is that in the `Process()` method of the worker, it defers
 a cleanup method which returns the given worker back to the global worker pool
 once it has finished.
+
+Our service has been running production now for a few weeks, and we haven't had
+any big issues so far. We make heavy use of statsd and grafana to help properly
+monitor errors and get a good bird's eye view at any given moment. Between our
+aggressive error handling and the monitoring, this approach seems to be
+sustainable.
+
+While not the most conventional way to do handl recurring job processing for
+scikit-learn, it has worked quite well for our team.
 
 
 
