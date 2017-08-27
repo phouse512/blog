@@ -227,10 +227,7 @@ checks, saving time for everyone else on your team.
 
 ---
 
-[^1]: If you're curious about the strange relative pathing of this `ln` call,
-it's because the `pre-commit` script is called from the `.git/hooks` directory,
-so it needs to know the path of our script from `.git/hooks` and not the root
-of our repository.
+[^1]: If you're curious about the strange relative pathing of this `ln` call, it's because the `pre-commit` script is called from the `.git/hooks` directory, so it needs to know the path of our script from `.git/hooks` and not the root of our repository.
 
 [amper]: https://www.amper.xyz/
 [mypy]: http://mypy-lang.org/
