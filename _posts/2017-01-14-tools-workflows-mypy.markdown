@@ -30,7 +30,7 @@ Without further ado, let's get started with the first on the list, mypy.
 ### mypy
 
 As I've learned and written more Python and Java, one of my biggest complaints
-about Java has been the lack of any sort of typing. Quite a few bugs I've
+about Python has been the lack of any sort of typing. Quite a few bugs I've
 created would've been discovered before run-time with Java, for example. There
 are other times when working in large code-bases it's simply not clear
 what is being passed from method to method. This is where mypy can help.
