@@ -215,7 +215,7 @@ simple scripting and some git/make magic, our workflow is done! It doesn't
 matter if you forget to lint some code before checking it in - git won't even
 let you commit until things pass on your machine.
 
----
+<hr class="custom-post-divider" />
 
 With that, our local development workflow is complete. Unit-testing,
 type-checking and linting help us to be more confident that our code is
@@ -224,8 +224,7 @@ without having to remember complicated build commands. Finally, git pre-commit
 hooks are the gatekeeper for submitting code that doesn't pass at least basic
 checks, saving time for everyone else on your team.
 
-
----
+<hr class="custom-post-divider" />
 
 [^1]: If you're curious about the strange relative pathing of this `ln` call, it's because the `pre-commit` script is called from the `.git/hooks` directory, so it needs to know the path of our script from `.git/hooks` and not the root of our repository.
 
