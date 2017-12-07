@@ -40,7 +40,8 @@ been useful in getting ourselves up and running!
 One of the first confusing things that tripped us up was figuring out how to
 structure our repository. When you download flyway for the first time, it comes
 with many directories: some for config files, jars, sql and more. This is what
-the structure of our repository looks like:
+the structure of our repository looks like. I'll briefly go over what each
+section is responsible for below.
 
 ```
 .circleci/  # holds our circleci build configurations
@@ -66,10 +67,12 @@ run_ci.sh  # used by circleci to run sql against test db
 seed.sh  # adds the seed data to the local dev db
 ```
 
-I'll briefly go over each section and detail the most important bits. The first
-important directory is `conf/`. Inside that directory, you'll find multiple
-configuration files that specify different database logins depending on their
-name. For example, here is what my `factory_dev.conf` file looks like:
+#### Configuration Files
+
+The first important directory is `conf/`. Inside that directory, you'll find
+multiple configuration files that specify different database logins
+depending on their name. For example, here is what my
+`factory_dev.conf` file looks like:
 
 ```
 flyway.url=jdbc:postgresql://localhost:5432/dev_db
@@ -78,7 +81,72 @@ flyway.locations=filesystem:sql
 ```
 
 These configuration files are pretty simple, and if you want to read more about
-configuration files, you can find documentation [here][config-doc].
+configuration files, you can find documentation [here][config-doc]. We use
+a separate configuration file for each development environment in order to make
+it clear when we are running migrations.
+
+#### SQL Migrations
+
+The next important directory is `sql/` - this directory is more
+self-explanatory. It holds the numbered sql files that flyway uses to migrate
+your database. The flyway documentation is pretty clear about how this works,
+so I'll leave that to you to figure out.
+
+#### User Configuration
+
+Inside `users/` we store sql scripts that hold the configuration for consistent
+users for ourselves and our services. I create new credentials for each
+service, along with fine-grained permissions based on what each service needs. 
+
+```
+/* user accounts */
+CREATE USER admin_user WITH PASSWORD 'fake_pass';
+CREATE USER user1 WITH PASSWORD 'fake_pass';
+CREATE USER service1 WITH PASSWORD 'fake_pass';
+
+/* give all priv's to admin_user */
+GRANT ALL PRIVILEGES ON DATABASE "test_db" to admin_user;
+
+/* give read-only privileges to user1 */
+GRANT SELECT ON ALL TABLES IN SCHEMA test_schema TO user1;
+ALTER DEFAULT PRIVILEGES IN SCHEMA test_schema GRANT SELECT ON TABLES TO user1;
+
+/* give read/write privileges to service1 */
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA test_schema TO service1;
+ALTER DEFAULT PRIVILEGES IN SCHEMA test_schema GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO service1;
+```
+
+We keep this outside our SQL migrations to allow for us to maintain consistent
+permissions across all of our servers. The credentials generated here are what
+the configuration files use to connect/run migrations, so it's a bit of
+a chicken-and-egg problem. The `initialize.sh` script in the root of our
+directory automatically runs these permissions commands to save some time and
+`psql` syntax lookups. This is definitely one of the more experimental
+aspects of our flyway usage, so we'll see how this evolves over time.
+
+#### Scripting
+
+The rest of the contents in this directory are helper scripts that make common
+actions a little bit easier. `initalize.sh` is used to ease getting a local
+database up and running locally. `seed.sh` makes it easy to load in seed data
+from the `seeds/` directory. We also include a script that our continous
+integration tools use to automatically validate new migrations.
+
+### practical workflows
+
+With the repository structure set up, let's go over how we actually use flyway.
+I'll go over two basic workflows, 1) initializing a local development database
+and 2) making changes to the production database schema.
+
+#### local setup
+
+When a new developer joins the team, or we're setting up a new development
+machine, we follow this workflow. It's not completely automated, but the most
+critical parts have been to help reduce human error.
+
+
+
+#### production changes
 
 [flyway]: https://flywaydb.org/
 [db-control]: https://blog.codinghorror.com/get-your-database-under-version-control/
