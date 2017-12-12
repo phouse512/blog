@@ -67,7 +67,7 @@ run_ci.sh  # used by circleci to run sql against test db
 seed.sh  # adds the seed data to the local dev db
 ```
 
-#### Configuration Files
+#### configuration files
 
 The first important directory is `conf/`. Inside that directory, you'll find
 multiple configuration files that specify different database logins
@@ -85,14 +85,14 @@ configuration files, you can find documentation [here][config-doc]. We use
 a separate configuration file for each development environment in order to make
 it clear when we are running migrations.
 
-#### SQL Migrations
+#### sql migrations
 
 The next important directory is `sql/` - this directory is more
 self-explanatory. It holds the numbered sql files that flyway uses to migrate
 your database. The flyway documentation is pretty clear about how this works,
 so I'll leave that to you to figure out.
 
-#### User Configuration
+#### user Configuration
 
 Inside `users/` we store sql scripts that hold the configuration for consistent
 users for ourselves and our services. I create new credentials for each
@@ -124,7 +124,7 @@ directory automatically runs these permissions commands to save some time and
 `psql` syntax lookups. This is definitely one of the more experimental
 aspects of our flyway usage, so we'll see how this evolves over time.
 
-#### Scripting
+#### scripting
 
 The rest of the contents in this directory are helper scripts that make common
 actions a little bit easier. `initalize.sh` is used to ease getting a local
@@ -143,6 +143,56 @@ and 2) making changes to the production database schema.
 When a new developer joins the team, or we're setting up a new development
 machine, we follow this workflow. It's not completely automated, but the most
 critical parts have been to help reduce human error.
+
+1. Set up a local instance of Postgres, this can be done with Docker, brew or
+   any other packages.
+2. Manually create a database with the name that your dev configuration uses.
+3. Run the `initialize.sh` script which takes care of user and schema
+   initialization.
+4. Migrate the clean database to the current production schema with `flyway
+   migrate`.
+5. Optional: Add some seed data to the database by running the script
+   `seed.sh`.
+
+As you can see, it's pretty simple, and it handles most of the complicated
+aspects for you. Once you have a database installed and running, our process
+takes care of almost all of it for you! We also use a similar flow when we want
+to blow our local DB and bring it back up to latest, especially after lots of
+testing.
+
+#### making changes
+
+The next most common workflow is actually making changes to the database. These
+steps assume that you already have the latest production schema running in your
+local database.
+
+1. Checkout a new branch in the database repo.
+2. Using `psql` or your favorite DB admin tool, modify the database to fit your
+   requirements. Be sure to keep track of exactly what you did if you spent
+   a bunch of time experimenting.
+3. Place all of your new changes in a sql file, and be sure to name it
+   following the flyway convention. By default, it requires numerically-ordered
+   files that look like this: `V001__some_change.sql`. Add a new file and
+   increment the lateset version so that flyway can pick it up.
+4. Open a pull-request, and let the CI server pick up your changes and ensure
+   that your sql runs without error.
+5. Merge the pull-request, and then run `flyway migrate` against your
+   production database.
+
+This flow is also pretty simple, it makes it very clear for everyone to review
+what exactly you're doing to the database. And while we don't have complex
+migration validation with our CI (it uses an empty DB), we can at least
+validate that it is valid sql on an outside machine. Next, I'll share a little
+bit more about how we've set up our testing flow.
+
+### continuous testing
+
+
+### looking forward
+
+- improve setup process
+- automate seed data
+- add better CI testing with real data
 
 
 
