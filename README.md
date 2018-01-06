@@ -22,3 +22,16 @@ More on branching strategy for this:
   <feature_branch>` to make stage look like your new post. Force push that to
   the remote stage branch to check it out.
 
+To build:
+
+```
+$ bundle exec jekyll build
+```
+
+Use this command to sync to server:
+
+```
+$ rsync -r _site/ phil@piper.phizzle.space:~/blog/_site
+```
+
+
