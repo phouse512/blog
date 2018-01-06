@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Version Control with Flyway"
-date: 2017-12-06 12:00:00 -0600
+date: 2018-01-07 12:00:00 -0600
 categories: db postgres flyway
 comments: true
 ---
@@ -18,7 +18,7 @@ applying similar principles to our database. We use a Postgres RDS instance
 hosted by AWS, and connect many of our services to it. When we've needed to
 make changes, it was a matter of jumping on the instance and manually writing
 SQL for table/index modifications. This has been fine with only two people on
-the team, but as we grow, this doesn't scale anymore.
+the team, but not with a team of six.
 
 Growing our team is the main reason why we've started version controlling our
 database, but it's not the only one. When I got started with this concept,
@@ -127,7 +127,7 @@ aspects of our flyway usage, so we'll see how this evolves over time.
 #### scripting
 
 The rest of the contents in this directory are helper scripts that make common
-actions a little bit easier. `initalize.sh` is used to ease getting a local
+actions a bit easier. `initialize.sh` is used to ease getting a local
 database up and running locally. `seed.sh` makes it easy to load in seed data
 from the `seeds/` directory. We also include a script that our continous
 integration tools use to automatically validate new migrations.
@@ -173,7 +173,7 @@ local database.
 3. Place all of your new changes in a sql file, and be sure to name it
    following the flyway convention. By default, it requires numerically-ordered
    files that look like this: `V001__some_change.sql`. Add a new file and
-   increment the lateset version so that flyway can pick it up.
+   increment the latest version so that flyway can pick it up.
 4. Open a pull-request, and let the CI server pick up your changes and ensure
    that your sql runs without error.
 5. Merge the pull-request, and then run `flyway migrate` against your
@@ -183,20 +183,69 @@ This flow is also pretty simple, it makes it very clear for everyone to review
 what exactly you're doing to the database. And while we don't have complex
 migration validation with our CI (it uses an empty DB), we can at least
 validate that it is valid sql on an outside machine. Next, I'll share a little
-bit more about how we've set up our testing flow.
+more about how we've set up our testing flow.
 
 ### continuous testing
 
+Now that we can programmatically migrate our databases, the next step is to
+hook it up to some continuous tools to help validate your builds on a clean
+server. Our CI testing flow is pretty naive so it doesn't ensure that existing
+data can be migrated, but it helps validate that the SQL is valid and can be
+run against the existing schema.
+
+We keep a tiny RDS instance running at all times. When a new commit is pushed
+to a remote branch, we run `flyway clean` and then `flyway migrate` against the
+test db. By clearing any existing schemas, this lets us be sure that the SQL we
+wrote will work against what exactly is in production. Like mentioned before,
+this doesn't migrate with seed data, but it gives us enough confidence that we
+aren't missing anything obvious.
+
+I elected not to automatically deploy to production on merges, as there might
+be cases where we want to carry out additional spot testing. At our team-size,
+this hasn't proven to be an issue as we aren't altering the database multiple
+times a day. If you elect to move forward with automatic production deploys, it
+might be worth investing in automating testing of the existing APIs against the
+new schema to make sure there it is compatible.
 
 ### looking forward
 
-- improve setup process
-- automate seed data
-- add better CI testing with real data
+So far, I've described our simple processes for managing our database schemas.
+For a small team, it works decently well, and helps keep everyone on the same
+page as we add, refactor, and remove old datastores. It also helps us find
+errors and easily see a working history of our databases' evolution over time.
+That being said, there are a few areas that we'd like to improve as time
+permits:
+
+#### improving the setup process
+
+When onboarding new developers and setting up new machines, the setup process
+above is a bit complex and requires many steps. It is also quite easy to
+botch it if one isn't careful. In the future we'd like to simplify the process,
+and also highlight exactly how flyway commands help us manage our schemas.
+
+#### automating seed data
+
+The seed data we currently have in our repo is manually generated using
+`pgdump` and the `--schema-only` flag. As you can imagine, this gets out of
+date as our schema evolves and requires someone to occasionally bump this. In
+an ideal world, we would have an automated weekly job that dumps production
+data into an S3 bucket. Each snapshot would be tagged with the current schema
+version, and when a seed command gets run, the tool would reconcile the schema
+version and find the latest valid seed snapshot.
+
+#### ci testing with real data
+
+Similar to the above point, we would want our CI testing to also get seeded
+with the most recent production data. Once we've validated that our latest
+migration works against a prod mirror, we'd like to run integration tests from
+our API to ensure that it has the correct code needed for the new schema.
 
 
+If you have ideas, feedback or more questions about how we do simple version
+control, feel free to reach out! When we developed this process, there wasn't
+as much helpful documentation on the web as I thought there might be, so
+hopefully this gives you a concrete example. Good luck!
 
-#### production changes
 
 [flyway]: https://flywaydb.org/
 [db-control]: https://blog.codinghorror.com/get-your-database-under-version-control/
