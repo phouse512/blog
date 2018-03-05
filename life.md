@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Life
+menu: hidden
 permalink: /life/
 ---
 This is a collection of short, daily thoughts and memories of life. It's

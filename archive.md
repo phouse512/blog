@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Archive
+menu: main
 permalink: /archive/
 ---
 A list of all of my posts and essays, chronologically sorted.

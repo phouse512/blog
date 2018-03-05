@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
-
-echo "testssldkfjsld"
+aws s3 sync ./_site s3://phizzle.space
