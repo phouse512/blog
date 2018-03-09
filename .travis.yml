@@ -1,12 +1,16 @@
-language: ruby
-rvm:
-- 2.3.0
+sudo: required
+services:
+  - docker
 
-script: ./scripts/cibuild
+stages:
+  - build
+  - name: deploy
+    if: branch = master
 
-deploy:
-  provider: script
-  script: ./scripts/deploy.sh
-  skip_cleanup: true
-  on:
-    branch: [stage, master]
+jobs:
+  include:
+    - stage: build
+      script: make build
+    - stage: deploy
+      script: make deploy
+
