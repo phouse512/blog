@@ -4,7 +4,7 @@ development:
 build:
 	docker run --volume="${PWD}:/srv/jekyll" -it jekyll/jekyll ./scripts/build.sh
 
-deploy:
+deploy: build
 	docker run --rm --volume="${PWD}:/build" -it \
 	-e AWS_ACCESS_KEY_ID=${PERSONAL_BLOG_KEY_ID} \
 	-e AWS_SECRET_ACCESS_KEY=${PERSONAL_BLOG_ACCESS_KEY} \
