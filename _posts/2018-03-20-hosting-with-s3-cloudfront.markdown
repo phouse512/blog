@@ -80,12 +80,29 @@ jekyll serve
 jekyll build
 ```
 
+# serverless hosting with s3 and cloudfront
+
+The next upgrade I wanted to make involved removing all operational overhead
+of hosting my own static website. Amazon's S3 service is a perfect fit and
+allows for static websites to be hosted without any personal maintenance.
+On top of that, Cloudfront can be used to offer a CDN service in front of S3 to
+improve latency. For many static sites, these tools are a great fit and allow
+for you to pay only for what you use and nothing more.
+
+Deploying on this setup is as simple as syncing jekyll's static output to your
+S3 bucket. After that you only need to invalidate the Cloudfront cache in front
+of your bucket, and then you'll be all set!
+
 # continuous integration and deployment
 
-The next step was to setup [Travis-CI][travis]
+The final step was to setup [Travis-CI][travis] to automate testing and
+deployment. Travis-CI supports a new [jobs][travis-jobs] feature that allows
+for serial job pipelines that can be super useful for things like deployments.
 
+Since I already have a Makefile setup for things like building and testing,
+I added another `make deploy` command so that both deploying manually and with
+CI would be easy.
 
-# serverless hosting with s3 and cloudfront
 
 
 # future ideas
