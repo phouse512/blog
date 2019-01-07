@@ -22,9 +22,9 @@ waiting for, so I decided to spring on it.
     2. [order of operations](#order-of-operations)
     3. [linux install](#linux-install)
     4. [lessons learned](#lessons-learned)
-3. [stability and burn-in](#3)
-4. [configuration management](#4)
-5. [backup and storage](#5)
+3. [configuration management](#configuration-management)
+4. [stability and burn-in](#stability-and-burn-in)
+5. [backup and storage](#backup-and-storage)
 
 
 ## goals
@@ -54,7 +54,7 @@ based on what I've experienced.
 ### parts list
 
 One of my unstated goals was to finish the build for under $500, and my parts
-below at the time of writing cost in total about $450. You might be able to
+below at the time of writing cost in total about $485. You might be able to
 find these cheaper depending on how prices change over time. The links below
 are also not sponsored in any way, so please just use them as a reference.
 
@@ -113,6 +113,8 @@ are also not sponsored in any way, so please just use them as a reference.
 - Easy access to the motherboard makes it simple to service or modify if you
     keep it on your desk. The top and both side panels are removable to allow
     all encompassing access.
+
+**WiFi PCIe Adapter**: [Gigabyte GC-WB867D-I][wifi]
 
 ### order of operations
 
@@ -206,6 +208,9 @@ manual if you are installing a GPU.*
 14. Connect any external fan power cables to your motherboard or PSU. Manuals
     come in handy as always!
 
+15. Once I was able to boot and test that the system was stable, and then
+    I installed my PCIe adapter for wireless networking.
+
 At this point, your computer is all set for you to begin booting up your
 particular OS boot drive if you have that ready. I recommend waiting to ziptie
 and organize cables until the very und of the process, but that's up to you. If
@@ -214,6 +219,42 @@ recommend you do that now.
 
 ### Linux Install
 
+I have the most experience with Ubuntu so I decided to go with the Ubuntu
+18.04.1 LTS release. There are many guides that go over setting up bootable
+drives so I won't rehash those here. I was able to boot from my USB
+drive easily and go through the standard Ubuntu install without much effort.
+
+Things only got tricky once I started rebooting my computer for the first time.
+I would get a purple splash screen... and then nothing. Upon further
+investigation, it looked to be an issue with support for the AMD Ryzen
+3 processor with onboard graphics. AMD has not released any official driver
+support for Linux, and I have not been able to find well-supported community
+drivers either. The only thing I've found searching across different forums and
+threads is the hint that the newer Linux kernels (4.17+) have better support
+for AMD GPUs.
+
+I decided to use a utility called [UKUU][ukuu] to help manage the kernel
+upgrade. Once installing kernel 4.20, I rebooted and have not had any issues
+with the AMD onboard graphics GPU getting recognized. To get to the point where
+I could even install UKUU and utilize the system, I had to manage the GRUB boot
+settings to manually force it to not attempt to use a GPU.
+
+In the GRUB loader, selected Advanced options for Ubuntu, then click `e` on the
+default loading configuration to edit it. You should see a line that has
+something looks like this:
+
+```
+ro quiet
+
+# change it to:
+ro nomodeset quiet
+```
+
+You can use `CTRL + X` to be able to boot with your modified entry. The system
+should boot fine, but you'll notice that the resolution will be poor, but it's
+enough to get what we need done. At this point, you can install UKUU and then
+load the 4.20 Linux kernel, reboot and you should be able to properly use your
+new system.
 
 ### Lessons Learned
 
@@ -229,6 +270,97 @@ some things that I either forgot or hadn't experienced before.
 - Have a USB keyboard and mouse available. I have been using Bluetooth
     keyboards for so long that I had to find an old one in storage.
 
+## configuration management
+
+In the spirit of making my builds repeatable and to prevent headaches when
+building future machines, I wanted to put as much configuration as possible
+into version control of some sort. I have the most experience with
+[Ansible][ansible], so I decided to create an Ansible playbook for the machine.
+
+I'll highlight the process in more detail in another post one day, but for now
+the only dependency I had to install before running my playbook was ansible
+itself. The initial steps are highlighted below:
+
+```
+$ sudo apt-get install software-properties-common
+$ sudo apt-add-repository ppa:ansible/ansible
+$ sudo apt-get update
+$ sudo apt-get install ansible git
+```
+
+Once ansible was installed, I cloned my repo that contains my configs,
+[circlefiles][circlefiles]. I then run my ansible playbook to ensure that the
+machine state is up-to-date.
+
+```
+$ ansible-playbook piper_home.yml --ask-sudo-pass
+```
+
+Using those ansible playbooks, you can then add whatever modules you need or
+want installed. I also use my playbooks to copy my vim config dotfiles, bashrc
+files and more. If you want to see the latest one that I use on this machine,
+you'll see it on the master branch on my circlefiles repo. The goal is to not
+just run commands when configuring and setting up packages, but to put it all
+in version control, so it's easy to set up new systems if the need arrives. Two
+years later when you're trying to remember what you did, you'll appreciate the
+detail.
+
+## stability and burn-in
+
+Now that my system was set up, I wanted to test for reliability and make sure
+that there were no obvious stability issues. From my research, I came up with
+two different tests for the CPU and memory. [prime95][prime95] is a common tool
+that can be used to push a CPU to its limits. [memtest86][memtest] can also
+be used to thoroughly test your RAM to make sure that there are no damaged
+areas.
+
+### memtest86
+
+Memtest86 is a utility that can be run from inside your existing OS or from
+a bootable USB drive. I opted to do the latter, as it allows for your RAM to be
+fully tested. From my understanding, when memtest is run from a running OS, it
+can't access all the RAM addresses possible. When run as a bootable drive, it
+can fully test all of your RAM for any errors.
+
+![memtest benchmark]({{ site.url }}/assets/memtest_benchmark.png)
+
+You can see the results from my memtest run above. By default, it goes for four
+full passes and runs each test four times. For my 8gb stick, it took a little
+under 2.5 hours to complete.
+
+### prime95
+
+prime95 is a software that calculates prime numbers, but has evolved into
+a program used by system builders to test stability of their systems. prime95
+is computationally intense, and can push your entire system's limits. MPrime is
+the specific Linux version that we will use. I based my test off of Jeff
+Atwood's [blog post on system reliability][reliability], so if you are curious
+about the details, I would read that first. The only difference is that I use
+another [tool][temp] to help monitor my CPU temps, as I'm running an AMD
+processor and not an Intel series CPU. If your computer can run it overnight
+without mprime crashing, you should be all set.
+
+## backup and storage
+
+The final step that I wanted to setup at the beginning was automating periodic
+backups of my user directories. There are dozens of backup tools out there, but
+I am most comfortable with a tool called [restic][restic]. To start, I just
+want to backup my home directory once a week to a remote S3 bucket that I've
+already configured.
+
+I've setup a cronjob that runs weekly that uses restic to create snapshots of
+my `/home` and `/var` directories and stores the encrypted snapshots on S3.
+
+It's not very complex and wouldn't handle a full system restore if I needed it,
+but at the very least I know I will have my user data backed up if anything
+goes wrong.
+
+[restic]: https://github.com/restic/restic
+[temp]: https://wiki.archlinux.org/index.php/lm_sensors
+[reliability]: https://blog.codinghorror.com/is-your-computer-stable/
+[memtest]: https://www.memtest.org/
+[prime95]: https://www.mersenne.org/download/
+[ansible]: https://www.ansible.com/
 [ryzeninstall]: https://www.youtube.com/watch?v=9VtH0EJRyAc
 [ryzen3]: https://www.amazon.com/AMD-Ryzen-Processor-Radeon-Graphics/dp/B079D3DBNM/
 [tomahawk]: https://www.amazon.com/MSI-Crossfire-Motherboard-B450-Tomahawk/dp/B07F7W5KJS/
@@ -236,4 +368,7 @@ some things that I either forgot or hadn't experienced before.
 [samsungssd]: https://www.amazon.com/Samsung-250GB-Internal-MZ-76E250B-AM/dp/B07864WMK8/
 [psu]: https://www.amazon.com/EVGA-Supernova-Modular-Warranty-220-G3-0750-X1/dp/B005BE058W/
 [case]: https://www.amazon.com/Cooler-Master-Computer-Radiator-RC-902XB-KKN2/dp/B00FFJ0H3Q/
+[wifi]: https://www.amazon.com/gp/product/B00HF8K0O6
+[circlefiles]: https://github.com/phouse512/circlefiles
+[ukuu]: https://github.com/teejee2008/ukuu
 
