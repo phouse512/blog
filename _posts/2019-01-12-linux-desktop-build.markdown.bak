@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Building a Desktop Linux PC"
-date: 2018-12-30 12:00:00 -0600
+date: 2019-01-12 12:00:00 -0600
 categories: linux diy build
 comments: true
 ---
@@ -25,6 +25,7 @@ waiting for, so I decided to spring on it.
 3. [configuration management](#configuration-management)
 4. [stability and burn-in](#stability-and-burn-in)
 5. [backup and storage](#backup-and-storage)
+6. [last thoughts](#last-thoughts)
 
 
 ## goals
@@ -208,8 +209,8 @@ manual if you are installing a GPU.*
 14. Connect any external fan power cables to your motherboard or PSU. Manuals
     come in handy as always!
 
-15. Once I was able to boot and test that the system was stable, and then
-    I installed my PCIe adapter for wireless networking.
+15. Once I was able to boot and test that the system was stable, I then
+    installed my PCIe adapter for wireless networking.
 
 At this point, your computer is all set for you to begin booting up your
 particular OS boot drive if you have that ready. I recommend waiting to ziptie
@@ -269,6 +270,10 @@ some things that I either forgot or hadn't experienced before.
     it's much easier to do it earlier than later once your motherboard is in.
 - Have a USB keyboard and mouse available. I have been using Bluetooth
     keyboards for so long that I had to find an old one in storage.
+- Research driver support early, before you buy components. In my case, it
+    worked out that the later Linux kernel supported my integrated graphics
+    card. In hindsight, I should've known there might've been potential
+    compatibility issues before I bought the parts.
 
 ## configuration management
 
@@ -353,8 +358,30 @@ my `/home` and `/var` directories and stores the encrypted snapshots on S3.
 
 It's not very complex and wouldn't handle a full system restore if I needed it,
 but at the very least I know I will have my user data backed up if anything
-goes wrong.
+goes wrong. If backups aren't easy, you won't ever backup your data, and using
+a tool like restic removes a lot of the friction.
 
+## last thoughts
+
+If you've stuck around this far, you've seen the entire lifecycle of a new
+desktop build. Setting up a Linux system definitely requires a few more tweaks
+here and there, but if you're looking for a free and reliable system you can
+use for local development and browsing, I highly recommend Ubuntu 18.
+
+Lastly, this new desktop is only a couple weeks old and there will be lots of
+things to iron over the coming months and years. There are many more things
+I would like to experiment with this computer, and I plan on documenting those
+projects as the need and time arises.
+
+- Installing another SSD that exclusively boots Windows.
+- Installing at least two 1TB HDDs that I can use for media backups.
+- Running [Minio][minio], an open-source s3 tool on those HDDs.
+- Digitizing old VHS tapes using [ffmpeg][ffmpeg] or [vlc][vlc] and a TV tuner
+    card.
+
+[vlc]: https://www.videolan.org/vlc/index.html
+[ffmpeg]: https://www.ffmpeg.org/
+[minio]: https://www.minio.io/
 [restic]: https://github.com/restic/restic
 [temp]: https://wiki.archlinux.org/index.php/lm_sensors
 [reliability]: https://blog.codinghorror.com/is-your-computer-stable/
