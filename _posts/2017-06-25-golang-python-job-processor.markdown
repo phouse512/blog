@@ -189,13 +189,13 @@ one final note is that in the `Process()` method of the worker, it defers
 a cleanup method which returns the given worker back to the global worker pool
 once it has finished.
 
-Our service has been running production now for a few weeks, and we haven't had
+Our service has been running in production now for a few weeks, and we haven't had
 any big issues so far. We make heavy use of statsd and grafana to help properly
 monitor errors and get a good bird's eye view at any given moment. Between our
 aggressive error handling and the monitoring, this approach seems to be
 sustainable.
 
-While not the most conventional way to do handl recurring job processing for
+While not the most conventional way to handle recurring job processing for
 scikit-learn, it has worked quite well for our team.
 
 

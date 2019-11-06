@@ -114,9 +114,13 @@ utility:
     smaller sets.
 - what series of commands should I combine into a single tool or uitility?
 
-There are some transient errors around sessions closing or being interrupted,
-but so far it has not impeded my script's ability to log any commands but I'd
-like to solve the root cause if possible.
+Some last thoughts on how to improve this and further customize iTerm2:
+- there are some transient errors around sessions closing or being interrupted,
+    and I don't know enough about the Python API to solve them yet
+- for each software project I work on, it'd be nice to issue a single command
+    that opens all the sessions required for builds, checkout branches, etc. 
+
+With such an open API, the options are limitless..
 
 
 [iterm]: https://iterm2.com/
