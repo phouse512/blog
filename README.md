@@ -4,13 +4,18 @@
 
 collection of personal thoughts related to technology, life, and other things.
 
+###### dependencies
+
+- jekyll
+- docker
+
 ###### deployment and operations
 
 This blog is set up for continuous integration and deployment. It also has
 a separate stage server hosted alongside http://phizzle.space 
 
 When code is pushed/merged into the `stage` branch, the code is automatically
-built and deployed to the stage server using my private jenkins box. Once
+built and deployed to the stage server using travis ci. Once
 satisified with that, you can then merge code from `stage` to `master`, where
 the code will be built and deployed directly to http://phizzle.space 
 
@@ -22,16 +27,12 @@ More on branching strategy for this:
   <feature_branch>` to make stage look like your new post. Force push that to
   the remote stage branch to check it out.
 
-To build:
+To run the build server locally and watch your local file system:
 
 ```
-$ bundle exec jekyll build
+$ make development
 ```
 
-Use this command to sync to server:
-
-```
-$ rsync -r _site/ phil@piper.phizzle.space:~/blog/_site
-```
-
+Deploys happen automatically upon merging to the production branch, using
+a docker image to run the deploy.
 
