@@ -36,3 +36,14 @@ $ make development
 Deploys happen automatically upon merging to the production branch, using
 a docker image to run the deploy.
 
+
+The blog also has an automated spellcheck incorporated into the test process.
+Spellcheck will be run on build before deployment, and can be run locally as
+well. `dictionary.txt` holds all exceptions since my content usually has
+non-standard vocabulary from software development.
+
+```
+# run spellcheck utility on posts
+$ make spellcheck
+```
+

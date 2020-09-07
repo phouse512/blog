@@ -4,3 +4,4 @@ _site
 *.swp
 .bundle/
 vendor/
+node_modules/

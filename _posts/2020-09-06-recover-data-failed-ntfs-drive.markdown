@@ -1,14 +1,14 @@
 ---
 layout: post
 title: "Recovering Data from a Failed NTFS Drive"
-date: 2020-09-03 12:00:00 -0600
+date: 2020-09-06 12:00:00 -0600
 categories: linux ubuntu data
 comments: true
 ---
 
-A family member recently came to me with a portable hard drive that was no longer
-readable onto a Windows OS. After confirming I was seeing the same issue on my
-own Windows PC, I went down the rabbit hole of attempting to recover as much
+A family member recently came to me with a portable hard drive that Windows could not read. 
+After confirming I was seeing the same issue on my
+own PC, I went down the rabbit hole of attempting to recover as much
 data as possible from the failed drive. I documented the path I took below, as
 well as some notes if you ever find yourself in the same position.
 
@@ -31,8 +31,8 @@ ddrescue requires that the input file be visible when you run `sudo lsblk`, so
 if the device doesn't even register there, unfortunately this won't help you.
 
 You will need an output disk that can contain the entire failed disk, not just
-the amount you used, so if you have a 1TB hard drive you are attempting to
-recover, I recommend using at least a 2TB hard drive to store the output.
+the amount you used, so if you have a 1 TB hard drive you are attempting to
+recover, I recommend using at least a 2 TB hard drive to store the output.
 ddrescue copies block for block, and doesn't know anything about the contents.
 
 ddrescue can be run with a mapfile that can allow the process to be picked up
@@ -51,7 +51,7 @@ bad sectors two additional times.
 Lastly, be aware that this is a very time consuming process, especially when
 you start retrying sectors. For my 1 TB hard drive, in total ddrescue ran for
 over 70 hours to fully process and retry the failed sectors. In my case,
-ddrescue was able to recover all but 60Mb of the original drive.
+ddrescue was able to recover all but 60 MB of the original drive.
 
 ### fixing the drive structure
 
@@ -62,8 +62,8 @@ a shot, and here is a link to a discussion about some of the options you have.
 
 [SuperUser - Fix corrupt NTFS partition without Windows][fix]
 
-It was unable to find the superblock, and couldn't fix itself in my case
-- always worth a shot once you have imaged the drive and have a backup.
+In my case, it was unable to find the superblock, and couldn't fix itself. I still recommend it, 
+as the upside is huge, and it's a simple check once you have created a backup. 
 
 ### recovering data
 
@@ -104,14 +104,16 @@ to photorec. I could imagine a simple rules engine that would look for
 filenames, authors, timestamps, locations and add them in priority order for
 some context for the drive owner.
 
-All in all, losing only 60mb out of a damaged 1Tb hard drive is more than I can
-ask for, so I can't complain. Let me know if you have any questions or
-experience with data recovery, would leave to hear more.
+All in all, losing only 60 MB out of a damaged 1 TB hard drive is more than I can
+ask for, so I can't complain. Lastly, I will always plug using some sort of backup
+tool like [Restic][restic] or [Backblaze][backblaze]. An ounce of prevention is
+worth a pound of cure, and backing up this drive regularly would've saved hours
+of work and headache.
 
 
 
-
-
+[backblaze]: https://www.backblaze.com/
+[restic]: https://restic.net/
 [photorec]: https://en.wikipedia.org/wiki/PhotoRec
 [foremost]: http://foremost.sourceforge.net/
 [ddrescue]: https://www.gnu.org/software/ddrescue/ddrescue.html 
