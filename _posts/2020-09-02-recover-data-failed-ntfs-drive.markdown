@@ -50,7 +50,8 @@ bad sectors two additional times.
 
 Lastly, be aware that this is a very time consuming process, especially when
 you start retrying sectors. For my 1 TB hard drive, in total ddrescue ran for
-over 70 hours to fully process and retry the failed sectors.
+over 70 hours to fully process and retry the failed sectors. In my case,
+ddrescue was able to recover all but 60Mb of the original drive.
 
 ### fixing the drive structure
 
@@ -61,10 +62,58 @@ a shot, and here is a link to a discussion about some of the options you have.
 
 [SuperUser - Fix corrupt NTFS partition without Windows][fix]
 
+It was unable to find the superblock, and couldn't fix itself in my case
+- always worth a shot once you have imaged the drive and have a backup.
+
 ### recovering data
 
+Once I had a full copy of the original drive, I was free to test out the
+various open source data recovery tools out there. Originally I used
+[Foremost][foremost], but I found it to not be helpful in terms of
+communicating how far along it was, and ease of use in pausing and restarting.
+
+Ultimately I ended up using [Photorec][photorec], and followed it's super
+simple usage directions. Despite its name, it is more than just a tool for
+recovering image files, it looks for all sorts of documents, text files, etc.
+Make sure you already have a new directory created ahead of time, as you
+won't have the option to create one inside photorec.
+
+```
+$ sudo photorec /media/hardrive/backup_image
+```
+
+Photorec has a detailed terminal UI that will guide you through selecting the
+image file (if you ran it without specifying it), selecting the output
+directory, and start the long process of searching. It will report the
+progress percentage and the number of each file type found. After running for
+many hours, I was able to recover over 10k files and copy them to a new hard
+drive.
+
+### conclusion
+
+At this point, you are free to test any data recovery tools on your backup
+images, just make sure that you aren't running them on the damaged disk. The
+only thing left desired after going through this is related to lost metadata
+after recovering files. After using photorec to find hundreds of gigabytes of
+data, many files were missing filenames and of course, any directory
+information was gone as well.
+
+Given that some file types have more complicated metadata embedded inside,
+a tool that parsed metadata when filenames were lost would be a great addition
+to photorec. I could imagine a simple rules engine that would look for
+filenames, authors, timestamps, locations and add them in priority order for
+some context for the drive owner.
+
+All in all, losing only 60mb out of a damaged 1Tb hard drive is more than I can
+ask for, so I can't complain. Let me know if you have any questions or
+experience with data recovery, would leave to hear more.
 
 
+
+
+
+[photorec]: https://en.wikipedia.org/wiki/PhotoRec
+[foremost]: http://foremost.sourceforge.net/
 [ddrescue]: https://www.gnu.org/software/ddrescue/ddrescue.html 
 [fix]: https://askubuntu.com/questions/47700/fix-corrupt-ntfs-partition-without-windows
 
