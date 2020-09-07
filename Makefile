@@ -11,3 +11,6 @@ deploy: build
 	-e AWS_DEFAULT_REGION="us-east-2" \
 	library/python:3.6 ./build/scripts/deploy.sh
 
+spellcheck:
+	./node_modules/.bin/spellchecker --files _posts/2020** --dictionaries dictionary.txt
+
