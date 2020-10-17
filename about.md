@@ -5,11 +5,11 @@ menu: main
 permalink: /about/
 ---
 
-Hi! My name is Philip, and I'm one of the co-founders of [Amper][amper], a small 
+Hi! My name is Philip, and I helped start [Amper][amper], a small 
 startup in the manufacturing IoT space. I formerly was a software engineer at
 [Sprout Social][sprout-social] in Chicago. I work in the world of web services
-and distributed systems, and usually find myself writing Java and Python,
-although lately I've been playing with Go.
+and distributed systems, and usually spend my time writing Python for work and
+Go for fun.
 
 Here are some things I'm interested in:
 
