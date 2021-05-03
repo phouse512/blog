@@ -11,7 +11,7 @@ web, and my cloud provider of choice is AWS. If you are familiar with the
 various tools provided by AWS, setting up a web stack through the console is
 straightforward. It may be tempting to depend on the UI, especially for
 something that is usually pretty static, but I highly recommend adopting
-Infrastructure-as-Code (IaS) principles and using a management tool. You'll
+Infrastructure-as-Code (IaC) principles and using a management tool. You'll
 find that the simplicity in deploying new sites and regions is worth the
 upfront time in setting up your deployment, and it'll be much
 easier to manage. 
@@ -35,8 +35,8 @@ apply with any other cloud agnostic tool, or AWS's IaC tool,
 
 Before I jump into how we're going to deploy a static site, a brief
 introduction to Terraform is required to make sense of the code we'll write.
-Terraform allows for engineers write declarative code to create, modify and
-destroy cloud assets on various cloud platforms such as GCP, AWS and others.
+Terraform allows for engineers to write declarative code to create, modify and
+destroy cloud assets on various cloud platforms such as [GCP][gcp], AWS and others.
 Instead of having to navigate a platform's CLI or UI, we can write terraform
 files that can be version controlled and added to the CI/CD platform of your
 choice. 
@@ -123,7 +123,7 @@ static site uses our memorable domain name.
 #### 4. IAM Policies
 
 [IAM][iam] stands for Identity Access Management, and is AWS's tool for
-managing secured and federated access inside their ecosystem. We will use this
+managing secure platform access within their ecosystem. We will use this
 to prevent unauthorized access to our S3 bucket, so that the only way users
 access our content is through our CloudFront distribution. This prevents
 unauthorized access, and enforces the client requirements we will set in our
@@ -144,7 +144,7 @@ these are not contained below is that they are really static, and are much more
 "set-it and forget-it" than anything below. They can be automated as well, but
 I deemed it out of scope for this example.
 
-First, this tutorial assumes you have an existing Hosted zone created in
+First, this tutorial assumes you have an existing Hosted Zone created in
 Route53. For each unique domain you have, you'll need a hosted zone. You don't
 necessarily need to purchase a domain through AWS, but if you manage a domain
 through another domain provider like Namecheap, you'll have to configure their
@@ -172,8 +172,8 @@ The `locals` block allows for you to parameterize variables that get referenced
 in multiple places later on. These could also be converted to 
 [input variables][inputvars] so that they can be dynamically set as well.
 
-The amount of CloudFront distribution parameters would take a full blog post of
-its own to go into the details.i I selected some sane defaults for this
+The amount of CloudFront distribution parameters would take a full blog post to 
+cover all of the details. I selected some sane defaults for this
 distribution: it requires HTTPS, uses `PriceClass_100`, which caches your
 content in NA and EU (cheapest option), and uses some standard caching values.
 
@@ -332,7 +332,7 @@ desired build directory to the S3 bucket, and then create an
 cached content needs to be refreshed from the S3 bucket.
 
 For a quick and easy example of how I do this with this blog, see the following
-[deployment script][deploy] in this very blog that uses the AWS cli to sync my
+[deployment script][deploy] in this very blog that uses the AWS CLI to sync my
 build folder, and create the invalidation.
 
 That script runs automatically with TravisCI so that each merge to my production
@@ -350,12 +350,12 @@ month to see how little it costs. For reference, this site costs less than a
 cup of coffee a month to host.
 
 With the rise of cloud platforms in the past decade, running infrastructure in
-the cloud has never been easier to get started. I hope this gives you a peek
+the cloud has never been more accessible. I hope this gives you a peek
 into the power of IaC for your side project or business. If you have any
 questions, feel free to email or ask below, I'm always happy to help if I can.
 
 
-[terraform]: https://www.terraform.io/a
+[terraform]: https://www.terraform.io/
 [cloudformation]: https://aws.amazon.com/cloudformation/
 [tf_docs]: https://registry.terraform.io/providers/hashicorp/aws/latest/docs
 [drift]: https://dzone.com/articles/configuration-drift
@@ -369,4 +369,5 @@ questions, feel free to email or ask below, I'm always happy to help if I can.
 [inputvars]: https://www.terraform.io/docs/language/values/variables.html
 [deploy]: https://github.com/phouse512/blog/blob/master/scripts/deploy.sh
 [inval]: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html
+[gcp]: https://cloud.google.com/
 
