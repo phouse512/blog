@@ -84,6 +84,7 @@ each of them that we had to consider ourselves.
 
 &nbsp;
 
+{% include image.html url="/assets/progress1.png"%}
 #### Step 1: Encrypting the Source Snapshot
 
 Copying a snapshot and encrypting it is basic. The only thing to think about
@@ -94,6 +95,7 @@ bottom of the page.
 &nbsp;
 &nbsp;
 
+{% include image.html url="/assets/progress2.png"%}
 #### Step 2: Creating the Encrypted Target Instance
 
 Creating a new target database is straightforward as well, you just need to
@@ -109,6 +111,7 @@ it is fully deployed and available.
 &nbsp;
 &nbsp;
 
+{% include image.html url="/assets/progress3.png"%}
 #### Step 3: Preparing Target Instance for Replication
 
 In order for the DMS replication task to work, foreign keys and triggers on
@@ -160,6 +163,7 @@ ALTER TABLE <table_name> ENABLE TRIGGER <trigger_name>;
 &nbsp;
 &nbsp;
 
+{% include image.html url="/assets/progress4.png"%}
 #### Step 4: Configuring and Running the DMS Task
 
 Once the target database is ready, it's time to start replication using DMS.
@@ -197,6 +201,7 @@ the way to the right to see the full table metrics.
 &nbsp;
 &nbsp;
 
+{% include image.html url="/assets/progress5.png"%}
 #### Step 5: Stopping Writes on the Source Instance
 
 Once the DMS task is at 100% and validation is complete, you are now ready to
@@ -216,6 +221,7 @@ connection activity and CPU activity drop significantly on the source.
 &nbsp;
 &nbsp;
 
+{% include image.html url="/assets/progress6.png"%}
 #### Step 6: Restoring Foreign Keys, Triggers and Sequences
 
 This step is the most complex, and time critical as you are on the clock with
@@ -241,6 +247,7 @@ back online.
 &nbsp;
 &nbsp;
 
+{% include image.html url="/assets/progress7.png"%}
 #### Step 7: Ending Downtime, Cleaning Up
 
 At this point, you can point your CNAME dns record at the new target database,
