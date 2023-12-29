@@ -25,7 +25,9 @@ Unfortunately, there are some critical details in my opinion that are missing.
 I'd like to share our experience of what gaps we had to fill to get
 everything to work smoothly. I recommend doing this migration on a
 less-critical database to get some confidence and real-time experience
-before doing it in production.
+before doing it in production. To give you some sense of time,
+the total migration time was about 5 hours, and application downtime lasted
+15 minutes.
 
 If you are a db admin, you will find this elementary. This is
 written for those of us that are used to RDS magic, but find ourselves having to
@@ -128,8 +130,39 @@ ALTER TABLE <table_name> DISABLE TRIGGER <trigger_name>;
 ALTER TABLE <table_name> ENABLE TRIGGER <trigger_name>;
 ```
 
-4.  CREATE DMS TASK DETAILS
+4. Once the target database is ready, it's time to start replication using DMS.
+There are a lot of levers in the AWS console here, and it's important to get
+them right. 
 
+- **Migration type**: Migrate existing data and replicate ongoing changes.
+- **Task Settings** -> *Target table preparation mode*: Truncate
+- **Task Settings**: Enable validation
+- Check `Turn on Cloudwatch logs`.
+- Check box at bottom, to keep task from starting upon setup.
+
+For some reason, the AWS migration guide specifies using the `Truncate` mode,
+which clears all row data, and migrates fresh. Because of this, we cannot use
+`set_replication_role` in `replica` mode (see gotcha below).
+
+We enabled validation also according to the AWS documentation. This extends the
+actual migration task process by quite some time, but it does give peace of
+mind. I recommend turning on the logs in Cloudwatch as this gives you
+good visibility into what is breaking and why. If you forget to remove a
+foreign key, for example, the logs will show why certain tables are not able to
+be replicated properly.
+
+Lastly, configuring the task but *not* starting it allows for one more chance
+to review things and make sure things are all set before you go. If you have
+already removed foreign keys and triggers, you can also just go for it.
+
+
+#### Step 5: Running the DMS Task
+Once the target database is ready and you've configured the DMS task, you are
+to start the task. Depending on your database size, this could take anywhere
+from 1-3 hours. In our case, the replication took 30 minutes but the validation
+took almost 1 hour after the replication was finished. The AWS console gives a
+good overview of what tables are in progress, and don't forget to scroll all
+the way to the right to see the full table metrics.
 
 ### Gotchas
 - not copying target db settings
