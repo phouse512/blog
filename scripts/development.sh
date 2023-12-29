@@ -3,7 +3,9 @@ echo "Running in local development mode."
 set -e # halt script on error
 
 cd /srv/jekyll
-gem install bundler:1.16.1
+echo "Running gem installer"
+gem install -V bundler:1.16.1
+echo "Jekyll build"
 jekyll build
 # htmlproofer --http-status-ignore 403 ./_site
 jekyll serve
