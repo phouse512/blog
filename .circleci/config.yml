@@ -19,7 +19,7 @@ jobs:
           name: "Build"
           command: make ci-build
       - persist_to_workspace:
-          root: build
+          root: /srv/jekyll/repo/build
           paths:
             - "*"
   deploy:
