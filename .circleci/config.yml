@@ -18,6 +18,10 @@ jobs:
       - run:
           name: "Build"
           command: make ci-build
+      - persist_to_workspace:
+          root: build
+          path:
+            - *
   deploy:
     docker:
       - image: jekyll/jekyll:3
