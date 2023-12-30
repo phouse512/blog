@@ -19,15 +19,17 @@ jobs:
           name: "Build"
           command: make ci-build
       - persist_to_workspace:
-          root: /srv/jekyll/repo/build
+          root: /srv/jekyll/_site
           paths:
             - "*"
   deploy:
     docker:
-      - image: jekyll/jekyll:3
-    working_directory: ~/repo
+      - image: cimg/python:3.12.1
+    working_directory: ~/
     steps:
       - checkout
+      - attach_workspace:
+          at: ./_site
       - run:
           name: "Deploy"
           command: make ci-deploy
