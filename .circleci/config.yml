@@ -25,11 +25,11 @@ jobs:
   deploy:
     docker:
       - image: cimg/python:3.12.1
-    working_directory: ~/
+    working_directory: ~/repo
     steps:
       - checkout
       - attach_workspace:
-          at: ./_site
+          at: ./repo/_build
       - run:
           name: "Deploy"
           command: make ci-deploy
