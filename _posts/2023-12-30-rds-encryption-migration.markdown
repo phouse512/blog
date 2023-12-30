@@ -15,7 +15,7 @@ Our company recently had to modify all of our RDS instances to be
 encrypted-at-rest for compliance reasons. While this is now the default in
 AWS, at the time when we started building our infrastructure (late 2017),
 this was not the case. Moving our large production instance with
-minimal-downtime was not as simple as we might have hoped, and required
+minimal-downtime was not as simple as we hoped, and required
 experimentation and cobbling together various sources of information and
 tooling.
 
@@ -84,6 +84,8 @@ each of them that we had to consider ourselves.
 
 &nbsp;
 
+&nbsp;
+
 {% include image.html url="/assets/progress1.png"%}
 #### Step 1: Encrypting the Source Snapshot
 
@@ -93,6 +95,7 @@ customer or self-managed one. The encryption checkbox is all the way at the
 bottom of the page.
 
 &nbsp;
+
 &nbsp;
 
 {% include image.html url="/assets/progress2.png"%}
@@ -109,6 +112,8 @@ and test the connection. This database won't populate in the DMS dropdown until
 it is fully deployed and available.
 
 &nbsp;
+&nbsp;
+
 &nbsp;
 
 {% include image.html url="/assets/progress3.png"%}
@@ -163,6 +168,8 @@ ALTER TABLE <table_name> ENABLE TRIGGER <trigger_name>;
 &nbsp;
 &nbsp;
 
+&nbsp;
+
 {% include image.html url="/assets/progress4.png"%}
 #### Step 4: Configuring and Running the DMS Task
 
@@ -171,14 +178,15 @@ There are a lot of levers in the AWS console here, and it's important to get
 them right. 
 
 - **Migration type**: Migrate existing data and replicate ongoing changes.
-- **Task Settings** -> *Target table preparation mode*: Truncate
+- **Task Settings** -> **Target table preparation mode**: Truncate
 - **Task Settings**: Enable validation
 - Check `Turn on Cloudwatch logs`.
 - Check box at bottom, to keep task from starting upon setup.
 
 For some reason, the AWS migration guide specifies using the `Truncate` mode,
-which clears all row data, and migrates fresh. Because of this, we cannot use
-`set_replication_role` in `replica` mode (see gotcha below).
+which clears all row data, and migrates rows from scratch (not the schema).
+Because of this, we cannot use `set_replication_role` in `replica` mode (see
+[note](#random-notes)).
 
 We enabled validation also according to the AWS documentation. This extends the
 actual migration task process by quite some time, but it does give peace of
@@ -199,6 +207,7 @@ good overview of what tables are in progress, and don't forget to scroll all
 the way to the right to see the full table metrics.
 
 &nbsp;
+
 &nbsp;
 
 {% include image.html url="/assets/progress5.png"%}
@@ -207,10 +216,9 @@ the way to the right to see the full table metrics.
 Once the DMS task is at 100% and validation is complete, you are now ready to
 begin the cutting over process, and start downtime. Before we can switch over
 to using the target database, we need to stop any new writes to the source
-database, so that nothing gets lost. You can handle this whatever way works
-for your architecture. If there is a straightforward monolith, you can just
-stop those instances. In our case, it was much easier to just add a restrictive
-security group that only allowed access from my machine. You still need access
+database, so that nothing gets lost. How you do this in practice will depend
+on your architecture. In our case, it made sense to add a restrictive
+security group that only allowed access from dev machines. You still need access
 to the source database, so make sure you have a way to connect, however that
 is.
 
@@ -219,6 +227,7 @@ replication task at this time. It will take a minute or two, but you should see
 connection activity and CPU activity drop significantly on the source.
 
 &nbsp;
+
 &nbsp;
 
 {% include image.html url="/assets/progress6.png"%}
@@ -245,6 +254,7 @@ in practice is important, the faster you do this, the quicker your users are
 back online.
 
 &nbsp;
+
 &nbsp;
 
 {% include image.html url="/assets/progress7.png"%}
@@ -268,7 +278,9 @@ doing the same - I'm sure there are some other notes and tips I could add here.
 
 
 &nbsp;
+
 &nbsp;
+
 &nbsp;
 
 ### Random Notes
