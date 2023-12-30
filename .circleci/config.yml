@@ -12,7 +12,7 @@ jobs:
       - image: jekyll/jekyll:3
     # Add steps to the job
     # See: https://circleci.com/docs/configuration-reference/#steps
-    working_directory: ~/repo
+    working_directory: /srv/jekyll
     steps:
       - checkout
       - run:
