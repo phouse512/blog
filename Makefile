@@ -14,7 +14,7 @@ deploy: build
 	-e AWS_DEFAULT_REGION="us-east-2" \
 	library/python:3.6 ./build/scripts/deploy.sh
 
-ci-deploy: ci-build
+ci-deploy:
 	./scripts/deploy.sh	
 
 spellcheck:
