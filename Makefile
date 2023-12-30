@@ -2,7 +2,7 @@ development:
 	docker run --rm -p 4000:4000 --volume="${PWD}:/srv/jekyll" -it jekyll/jekyll:3 ./scripts/development.sh
 
 build:
-	docker run --volume="${PWD}:/srv/jekyll" -it jekyll/jekyll ./scripts/build.sh
+	docker run --volume="${PWD}:/srv/jekyll" -it jekyll/jekyll:3 ./scripts/build.sh
 
 deploy: build
 	docker run --rm --volume="${PWD}:/build" -it \
