@@ -21,7 +21,7 @@ jobs:
       - persist_to_workspace:
           root: build
           path:
-            - *
+            - "*"
   deploy:
     docker:
       - image: jekyll/jekyll:3
