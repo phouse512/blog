@@ -12,6 +12,7 @@ jobs:
       - image: cimg/base:stable
     # Add steps to the job
     # See: https://circleci.com/docs/configuration-reference/#steps
+    working_directory: ~/repo
     steps:
       - checkout
       - setup_remote_docker
