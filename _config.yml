@@ -11,14 +11,13 @@ email: phouse512 at gmail dot com
 description: "A personal collection of thoughts on programming, learning, and other things."
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://phizzle.space" # the base hostname & protocol for your site
-twitter_username: PhilipHouse2
 github_username:  phouse512
 
 # Build settings
 markdown: kramdown
 future: true
 
-gems: [jekyll-seo-tag]
+plugins: [jekyll-seo-tag]
 
 collections:
 - life_posts
